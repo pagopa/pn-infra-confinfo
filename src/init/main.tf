@@ -1,13 +1,12 @@
 terraform {
-  required_version = "~> <terraform latest version eg: 1.1.0>"
+  required_version = "1.4.2"
 
-  # TODO Uncomment once the backend S3 bucket is created and upload the state tate file.
-  #backend "s3" {}
+  backend "s3" {}
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> <terraform aws plugin version eg: 4.0.0>"
+      version = "4.60.0"
     }
   }
 }
@@ -20,7 +19,7 @@ provider "aws" {
 # create an S3 bucket to store the state file in
 
 resource "aws_s3_bucket" "terraform_states" {
-  bucket_prefix = "terraform-backend-"
+  bucket = "terraform-backend-eu-south-1-830192246553"
 
   lifecycle {
     prevent_destroy = true
@@ -88,35 +87,35 @@ resource "aws_iam_openid_connect_provider" "github" {
   ]
 }
 
-resource "aws_iam_role" "githubiac" {
-  name        = "GitHubActionIACRole"
-  description = "Role to assume to create the infrastructure."
+# resource "aws_iam_role" "githubiac" {
+#   name        = "GitHubActionIACRole"
+#   description = "Role to assume to create the infrastructure."
 
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = {
-          "Federated" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
-        },
-        Action = "sts:AssumeRoleWithWebIdentity",
-        Condition = {
-          StringLike = {
-            "token.actions.githubusercontent.com:sub" : "repo:${var.github_repository}:*"
-          },
-          "ForAllValues:StringEquals" = {
-            "token.actions.githubusercontent.com:iss" : "https://token.actions.githubusercontent.com",
-            "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
-          }
-        }
-      }
-    ]
-  })
-}
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow",
+#         Principal = {
+#           "Federated" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
+#         },
+#         Action = "sts:AssumeRoleWithWebIdentity",
+#         Condition = {
+#           StringLike = {
+#             "token.actions.githubusercontent.com:sub" : "repo:${var.github_repository}:*"
+#           },
+#           "ForAllValues:StringEquals" = {
+#             "token.actions.githubusercontent.com:iss" : "https://token.actions.githubusercontent.com",
+#             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
+#           }
+#         }
+#       }
+#     ]
+#   })
+# }
 
-resource "aws_iam_role_policy_attachment" "githubiac" {
-  role       = aws_iam_role.githubiac.name
-  policy_arn = data.aws_iam_policy.admin_access.arn
-}
+# resource "aws_iam_role_policy_attachment" "githubiac" {
+#   role       = aws_iam_role.githubiac.name
+#   policy_arn = data.aws_iam_policy.admin_access.arn
+# }
