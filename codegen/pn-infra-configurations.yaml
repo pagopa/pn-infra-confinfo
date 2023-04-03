@@ -1,0 +1,129 @@
+
+envs:
+  dev:
+    vpcs:
+      - code: pn-confinfo
+        idx: 2
+      - code: pn-spid-hub
+        idx: 3
+    azs: 3
+    accounts:
+      - code: pn-confinfo
+        base_dns: spid.dev.notifichedigitali.it
+
+accounts:
+  - code: pn-confinfo
+    has_apigw: false
+    vpcs:
+      - code: pn-confinfo
+        name: PN ConfInfo
+        primary_cidr: 10.<vpc_idx>.0.0/16
+        aws_svc:
+          net: aws
+          interfaces_endpoints:
+            - "sqs"
+            - "logs"
+            - "sns"
+            - "kms"
+            - "kinesis-streams"
+            - "elasticloadbalancing"
+            - "events"
+            - "ecr.api"
+            - "ecr.dkr"
+            - "ssmmessages"
+            - "ssm"
+            - "ec2messages"
+            - "ecs-agent"
+            - "ecs-telemetry"
+            - "ecs"
+        networks:
+          - code: public
+            name: Public
+            gateway: 
+              type: igw
+            has_nat: true
+            first_net_ip: 10.<vpc_idx>.1.0
+            net_size: 16
+
+          - code: dvin
+            name: DataVault Ingress
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.2.0
+            net_size: 16
+          
+          - code: ecssin
+            name: ExternalChannels SafeStorage Ingress
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.3.0
+            net_size: 16
+
+          - code: confinfo-egres
+            name: ConfInfo Egress
+            gateway: 
+              type: nat
+              network: public
+            first_net_ip: 10.<vpc_idx>.10.0
+            net_size: 256
+
+          - code: confinfo
+            name: ConfInfo
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.30.0
+            net_size: 256
+          
+          - code: postel
+            name: PostelGW DMZ
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.40.0
+            net_size: 256
+          
+          - code: aws
+            name: AWS Services
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.50.0
+            net_size: 256
+      
+      - code: pn-spid-hub
+        name: PN SpidHub
+        primary_cidr: 10.<vpc_idx>.0.0/16
+        aws_svc:
+          net: aws
+          interfaces_endpoints:
+            - "sqs"
+            - "logs"
+            - "sns"
+            - "kms"
+            - "kinesis-streams"
+            - "elasticloadbalancing"
+            - "events"
+            - "ecr.api"
+            - "ecr.dkr"
+            - "ssmmessages"
+            - "ssm"
+            - "ec2messages"
+            - "ecs-agent"
+            - "ecs-telemetry"
+            - "ecs"
+        networks:
+          - code: public
+            name: Public
+            gateway: 
+              type: igw
+            has_nat: true
+            first_net_ip: 10.<vpc_idx>.1.0
+            net_size: 16
+
+          - code: private
+            name: Private
+            gateway: 
+              type: nat
+              network: public
+            first_net_ip: 10.<vpc_idx>.10.0
+            net_size: 256
+          
+          - code: aws
+            name: AWS Services
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.90.0
+            net_size: 256
+
