@@ -19,7 +19,7 @@ provider "aws" {
 # create an S3 bucket to store the state file in
 
 resource "aws_s3_bucket" "terraform_states" {
-  bucket = "terraform-backend-eu-south-1-830192246553"
+  bucket = "terraform-backend-eu-south-1-${data.aws_caller_identity.current.account_id}"
 
   lifecycle {
     prevent_destroy = true
@@ -75,17 +75,17 @@ data "aws_iam_policy" "admin_access" {
 data "aws_caller_identity" "current" {}
 
 # github openid identity provider.
-resource "aws_iam_openid_connect_provider" "github" {
-  url = "https://token.actions.githubusercontent.com"
+# resource "aws_iam_openid_connect_provider" "github" {
+#   url = "https://token.actions.githubusercontent.com"
 
-  client_id_list = [
-    "sts.amazonaws.com",
-  ]
+#   client_id_list = [
+#     "sts.amazonaws.com",
+#   ]
 
-  thumbprint_list = [
-    "6938fd4d98bab03faadb97b34396831e3780aea1"
-  ]
-}
+#   thumbprint_list = [
+#     "6938fd4d98bab03faadb97b34396831e3780aea1"
+#   ]
+# }
 
 # resource "aws_iam_role" "githubiac" {
 #   name        = "GitHubActionIACRole"
