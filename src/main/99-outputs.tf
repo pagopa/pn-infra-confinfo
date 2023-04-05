@@ -10,44 +10,20 @@ output "ConfInfo_VpcCidr" {
 }
 
 
-data "aws_subnet" "ConfInfo_SubnetsIds" {
-  count = 3
-
-  filter {
-    name   = "tag:Name"
-    values = [
-      "PN ConfInfo - ConfInfo Subnet (dev) AZ ${count.index}"
-    ]
-  }
-}
-
 output "ConfInfo_SubnetsIds" {
-  value = data.aws_subnet.ConfInfo_SubnetsIds.*.id
+  value = local.ConfInfo_SubnetsIds
 }
 
-output "ConfInfo_SubnetsCidr" {
-  value = data.aws_subnet.ConfInfo_SubnetsIds.*.cidr_block
-}
-
-
-
-data "aws_subnet" "ConfInfo_EgressSubnetsIds" {
-  count = 3
-
-  filter {
-    name   = "tag:Name"
-    values = [
-      "PN ConfInfo - ConfInfo Egress Subnet (dev) AZ ${count.index}"
-    ]
-  }
+output "ConfInfo_SubnetsCidrs" {
+  value = local.ConfInfo_SubnetsCidrs
 }
 
 output "ConfInfo_EgressSubnetsIds" {
-  value = data.aws_subnet.ConfInfo_EgressSubnetsIds.*.id
+  value = local.ConfInfo_EgressSubnetsIds
 }
 
-output "ConfInfo_EgressSubnetsCidr" {
-  value = data.aws_subnet.ConfInfo_EgressSubnetsIds.*.cidr_block
+output "ConfInfo_EgressSubnetsCidrs" {
+  value = local.ConfInfo_EgressSubnetsCidrs
 }
 
 

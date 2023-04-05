@@ -50,12 +50,14 @@ accounts:
             gateway: null
             first_net_ip: 10.<vpc_idx>.2.0
             net_size: 16
+            nlb: true
           
           - code: ecssin
             name: ExternalChannels SafeStorage Ingress
             gateway: null
             first_net_ip: 10.<vpc_idx>.3.0
             net_size: 16
+            nlb: true
 
           - code: confinfo-egres
             name: ConfInfo Egress
@@ -64,12 +66,14 @@ accounts:
               network: public
             first_net_ip: 10.<vpc_idx>.10.0
             net_size: 256
+            export_cidrs: true
 
           - code: confinfo
             name: ConfInfo
             gateway: null
             first_net_ip: 10.<vpc_idx>.30.0
             net_size: 256
+            export_cidrs: true
           
           - code: postel
             name: PostelGW DMZ

@@ -16,6 +16,14 @@ variable "how_many_az" {
   description = "How many Availability Zone we have to use"
 }
 
+variable "pn_core_account_id" {
+  hflfjglfjgklfjglf
+}
+
+variable "pn_confinfo_account_id" {
+  hflfjglfjgklfjglf
+}
+
 
 variable "dns_zone" {
   type        = string
@@ -95,6 +103,26 @@ variable "vpc_pn_confinfo_internal_subnets_names" {
 variable "vpc_endpoints_pn_confinfo" {
   type        = list(string)
   description = "Endpoint List"
+}
+
+variable "vpc_pn_confinfo_confinfo_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of Confinfo subnets in VPC pn-confinfo"
+}
+
+variable "vpc_pn_confinfo_confinfo_egres_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of EgressConfinfo subnets in VPC pn-confinfo"
+}
+
+variable "vpc_pn_confinfo_dvin_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of Data Value Ingress subnets in VPC pn-confinfo"
+}
+
+variable "vpc_pn_confinfo_ecssin_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of ExternalChannel and SafeStorage Ingress subnets in VPC pn-confinfo"
 }
 
 
