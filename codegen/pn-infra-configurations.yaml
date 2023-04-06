@@ -40,6 +40,7 @@ accounts:
             - "ecs-agent"
             - "ecs-telemetry"
             - "ecs"
+            - "secretsmanager"
         networks:
           - code: public
             name: Public
