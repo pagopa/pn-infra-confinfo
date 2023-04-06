@@ -6,6 +6,8 @@ api_domains = []
 cdn_domains = []
 apigw_custom_domains = []
   
+pn_core_aws_account_id = "830192246553"
+pn_confinfo_aws_account_id = "089813480515"
 
 
 vpc_pn_confinfo_name = "PN ConfInfo"

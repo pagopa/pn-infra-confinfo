@@ -8,8 +8,12 @@ envs:
         idx: 3
     azs: 3
     accounts:
+      - code: pn-core
+        base_dns: dev.notifichedigitali.it
+        aws_id: "830192246553" # Stringhe non numeri
       - code: pn-confinfo
         base_dns: spid.dev.notifichedigitali.it
+        aws_id: "089813480515"  # Stringhe non numeri
 
 accounts:
   - code: pn-confinfo

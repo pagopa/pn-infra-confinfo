@@ -60,7 +60,7 @@ resource "aws_lb" "pn_confinfo_dvin_nlb" {
 resource "aws_vpc_endpoint_service" "pn_confinfo_dvin_endpoint_svc" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.pn_confinfo_dvin_nlb.arn]
-  allowed_principals         = ["arn:aws:iam::${var.pn_core_account_id}:root"]
+  allowed_principals         = ["arn:aws:iam::${var.pn_core_aws_account_id}:root"]
 
   tags = {
     "Name": "PN ConfInfo - DataVault - SVC endpoint"
@@ -97,7 +97,7 @@ resource "aws_lb" "pn_confinfo_ecssin_nlb" {
 resource "aws_vpc_endpoint_service" "pn_confinfo_ecssin_endpoint_svc" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.pn_confinfo_ecssin_nlb.arn]
-  allowed_principals         = ["arn:aws:iam::${var.pn_core_account_id}:root"]
+  allowed_principals         = ["arn:aws:iam::${var.pn_core_aws_account_id}:root"]
 
   tags = {
     "Name": "PN ConfInfo - SafeStorage and ExternalChannel - SVC endpoint"
