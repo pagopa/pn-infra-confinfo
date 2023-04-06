@@ -27,3 +27,18 @@ output "ConfInfo_EgressSubnetsCidrs" {
 }
 
 
+output "ConfInfo_ApplicationLoadBalancerArn" {
+  value = aws_lb.pn_confinfo_ecs_alb.arn
+  description = "ECS cluster Application Load Balancer ARN, attach microservice listeners here"
+}
+
+output "ConfInfo_ApplicationLoadBalancerAwsDns" {
+  value = aws_lb.pn_confinfo_ecs_alb.dns_name 
+  description = "ECS cluster Application Load Balancer AWS released DNS, can be used to call microservices"
+}
+
+output "ConfInfo_ApplicationLoadBalancerAwsDnsZoneId" {
+  value = aws_lb.pn_confinfo_ecs_alb.zone_id 
+  description = "ECS cluster Application Load Balancer AWS hosted Zone, usefull for aliases"
+}
+
