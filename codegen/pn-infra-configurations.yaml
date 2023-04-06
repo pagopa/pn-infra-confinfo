@@ -41,6 +41,8 @@ accounts:
             - "ecs-telemetry"
             - "ecs"
             - "secretsmanager"
+            - "monitoring"
+            - "xray"
         networks:
           - code: public
             name: Public
