@@ -10,19 +10,19 @@ output "ConfInfo_VpcCidr" {
 }
 
 
-output "ConfInfo_SubnetsIds" {
+output "ConfInfo_VpcSubnets" {
   value = local.ConfInfo_SubnetsIds
 }
 
-output "ConfInfo_SubnetsCidrs" {
+output "ConfInfo_VpcSubnetsCidrs" {
   value = local.ConfInfo_SubnetsCidrs
 }
 
-output "ConfInfo_EgressSubnetsIds" {
+output "ConfInfo_VpcEgressSubnetsIds" {
   value = local.ConfInfo_EgressSubnetsIds
 }
 
-output "ConfInfo_EgressSubnetsCidrs" {
+output "ConfInfo_VpcEgressSubnetsCidrs" {
   value = local.ConfInfo_EgressSubnetsCidrs
 }
 
