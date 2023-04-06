@@ -42,3 +42,18 @@ output "ConfInfo_ApplicationLoadBalancerAwsDnsZoneId" {
   description = "ECS cluster Application Load Balancer AWS hosted Zone, usefull for aliases"
 }
 
+output "ConfInfo_ApplicationLoadBalancerListenerArn" {
+  value = aws_lb_listener.pn_confinfo_ecs_alb_8080.arn
+  description = "ECS cluster Application Load Balancer Listener ARN, attach here new microservice routing rule"
+}
+
+
+output "ConfInfo_WebappSecurityGroupId" {
+  value = aws_security_group.vpc_pn_confinfo__secgrp_webapp.id
+  description = "WebApp security group id"
+}
+
+output "ConfInfo_WebappSecurityGroupArn" {
+  value = aws_security_group.vpc_pn_confinfo__secgrp_webapp.arn
+  description = "WebApp security group ARN"
+}

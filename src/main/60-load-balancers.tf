@@ -12,10 +12,11 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_webapp" {
     protocol    = "tcp"
     cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
   }
-
 }
 
 
+
+# - ECS cluster Application load balancer 
 resource "aws_lb" "pn_confinfo_ecs_alb" {
   name_prefix        = "EcsA-"
   internal           = true
@@ -29,8 +30,26 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
     "Name": "PN ConfInfo - ECS Cluster - ALB"
   }
 }
+# - ECS cluster Application load balancer HTTP listener
+resource "aws_lb_listener" "pn_confinfo_ecs_alb_8080" {
+  load_balancer_arn = aws_lb.pn_confinfo_ecs_alb.arn
+  port              = "8080"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "application/json"
+      message_body = "{ \"error\": \"404\", \"message\": \"Load balancer rule not configured\" }"
+      status_code  = "404"
+    }
+  }
+}
 
 
+
+# - NLB Di ingresso per le invocazioni a Data Vault
 resource "aws_lb" "pn_confinfo_dvin_nlb" {
   name_prefix = "DvI-"
 
@@ -38,25 +57,21 @@ resource "aws_lb" "pn_confinfo_dvin_nlb" {
   ip_address_type = "ipv4"
   load_balancer_type = "network"
 
-  subnet_mapping {
-    private_ipv4_address = cidrhost( local.ConfInfo_NlbDv_SubnetsCidrs[0], 8)
-    subnet_id = local.ConfInfo_NlbDv_SubnetsIds[0]
-  }
 
-  subnet_mapping {
-    private_ipv4_address = cidrhost( local.ConfInfo_NlbDv_SubnetsCidrs[1], 8)
-    subnet_id = local.ConfInfo_NlbDv_SubnetsIds[1]
-  }
-  
-  subnet_mapping {
-    private_ipv4_address = cidrhost( local.ConfInfo_NlbDv_SubnetsCidrs[2], 8)
-    subnet_id = local.ConfInfo_NlbDv_SubnetsIds[2]
+  dynamic "subnet_mapping" {
+    for_each = range(var.how_many_az)
+
+    content {
+      private_ipv4_address = cidrhost( local.ConfInfo_NlbDv_SubnetsCidrs[subnet_mapping.key], 8)
+      subnet_id = local.ConfInfo_NlbDv_SubnetsIds[subnet_mapping.key]
+    }
   }
 
   tags = {
     "Name": "PN ConfInfo - DataVault Ingress - NLB"
   }
 }
+# - ServiceEndpoint ingresso per le invocazioni a Data Vault
 resource "aws_vpc_endpoint_service" "pn_confinfo_dvin_endpoint_svc" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.pn_confinfo_dvin_nlb.arn]
@@ -66,8 +81,39 @@ resource "aws_vpc_endpoint_service" "pn_confinfo_dvin_endpoint_svc" {
     "Name": "PN ConfInfo - DataVault - SVC endpoint"
   }
 }
+# - DataVault NLB listener for HTTP
+resource "aws_lb_listener" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
+  load_balancer_arn = aws_lb.pn_confinfo_dvin_nlb.arn
+  protocol = "TCP"
+  port     = 8080
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.pn_confinfo_dvin_nlb_8080_to_alb_8080.arn
+  }
+}
+# - DataVault NLB target group for HTTP
+resource "aws_lb_target_group" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
+  name_prefix = "DvI-"
+  vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  port        = 8080
+  protocol    = "TCP"
+  target_type = "alb"
+  
+  depends_on = [
+    aws_lb.pn_confinfo_dvin_nlb,
+    aws_lb.pn_confinfo_ecs_alb
+  ]
+
+  tags = {
+    "Description": "PN ConfInfo - DataVault NLB to ALB - Target Group"
+  }
+}
 
 
+
+# - NLB Di ingresso per le invocazioni a ExternalChannel e SafeStorage
 resource "aws_lb" "pn_confinfo_ecssin_nlb" {
   name_prefix = "EcssI-"
 
@@ -75,25 +121,20 @@ resource "aws_lb" "pn_confinfo_ecssin_nlb" {
   ip_address_type = "ipv4"
   load_balancer_type = "network"
 
-  subnet_mapping {
-    private_ipv4_address = cidrhost( local.ConfInfo_NlbEcss_SubnetsCidrs[0], 8)
-    subnet_id = local.ConfInfo_NlbEcss_SubnetsIds[0]
-  }
+  dynamic "subnet_mapping" {
+    for_each = range(var.how_many_az)
 
-  subnet_mapping {
-    private_ipv4_address = cidrhost( local.ConfInfo_NlbEcss_SubnetsCidrs[1], 8)
-    subnet_id = local.ConfInfo_NlbEcss_SubnetsIds[1]
-  }
-  
-  subnet_mapping {
-    private_ipv4_address = cidrhost( local.ConfInfo_NlbEcss_SubnetsCidrs[2], 8)
-    subnet_id = local.ConfInfo_NlbEcss_SubnetsIds[2]
+    content {
+      private_ipv4_address = cidrhost( local.ConfInfo_NlbEcss_SubnetsCidrs[subnet_mapping.key], 8)
+      subnet_id = local.ConfInfo_NlbEcss_SubnetsIds[subnet_mapping.key]
+    }
   }
 
   tags = {
     "Name": "PN ConfInfo - ExternalChannel and SafeStorage Ingress - NLB"
   }
 }
+# - ServiceEndpoint ingresso per le invocazioni a ExternalChannel e SafeStorage
 resource "aws_vpc_endpoint_service" "pn_confinfo_ecssin_endpoint_svc" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.pn_confinfo_ecssin_nlb.arn]
@@ -101,6 +142,35 @@ resource "aws_vpc_endpoint_service" "pn_confinfo_ecssin_endpoint_svc" {
 
   tags = {
     "Name": "PN ConfInfo - SafeStorage and ExternalChannel - SVC endpoint"
+  }
+}
+# - ExternalChannel e SafeStorage NLB listener for HTTP
+resource "aws_lb_listener" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
+  load_balancer_arn = aws_lb.pn_confinfo_ecssin_nlb.arn
+  protocol = "TCP"
+  port     = 8080
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.pn_confinfo_ecssin_nlb_8080_to_alb_8080.arn
+  }
+}
+# - ExternalChannel e SafeStorage NLB target group for HTTP
+resource "aws_lb_target_group" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
+  name_prefix = "EcssI-"
+  vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  port        = 8080
+  protocol    = "TCP"
+  target_type = "alb"
+  
+  depends_on = [
+    aws_lb.pn_confinfo_ecssin_nlb,
+    aws_lb.pn_confinfo_ecs_alb
+  ]
+
+  tags = {
+    "Description": "PN ConfInfo - ExternalChannel and SafeStorage NLB to ALB - Target Group"
   }
 }
 
