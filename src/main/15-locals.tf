@@ -15,7 +15,7 @@ locals {
 
   ConfInfo_EgressSubnetsIds = [
       for idx, cidr in module.vpc_pn_confinfo.private_subnets_cidr_blocks:
-          module.vpc_pn_confinfo.intra_subnets[idx] 
+          module.vpc_pn_confinfo.private_subnets[idx] 
             if contains( var.vpc_pn_confinfo_confinfo_egres_subnets_cidrs, cidr)
     ]
   
