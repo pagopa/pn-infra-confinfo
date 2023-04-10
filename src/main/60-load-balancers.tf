@@ -117,6 +117,17 @@ resource "aws_lb_target_group" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
   tags = {
     "Description": "PN ConfInfo - DataVault NLB to ALB - Target Group"
   }
+
+  health_check {
+    enabled = true
+    matcher = "200-499"
+  }
+}
+resource "aws_lb_target_group_attachment" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_dvin_nlb_8080_to_alb_8080.arn
+  port              = 8080
+
+  target_id         = aws_lb.pn_confinfo_ecs_alb.arn
 }
 
 
@@ -180,5 +191,15 @@ resource "aws_lb_target_group" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
   tags = {
     "Description": "PN ConfInfo - ExternalChannel and SafeStorage NLB to ALB - Target Group"
   }
-}
 
+  health_check {
+    enabled = true
+    matcher = "200-499"
+  }
+}
+resource "aws_lb_target_group_attachment" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_ecssin_nlb_8080_to_alb_8080.arn
+  port              = 8080
+
+  target_id         = aws_lb.pn_confinfo_ecs_alb.arn
+}
