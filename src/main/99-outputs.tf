@@ -62,3 +62,13 @@ output "ConfInfo_WebappSecurityGroupArn" {
   value = aws_security_group.vpc_pn_confinfo__secgrp_webapp.arn
   description = "WebApp security group ARN"
 }
+
+
+output "ConfInfo_ServiceEndpoint_ToDataVault" {
+  value = aws_vpc_endpoint_service.pn_confinfo_dvin_endpoint_svc.service_name
+  description = "Service endpoint for DataVault connections"
+}
+output "ConfInfo_ServiceEndpoint_ToExternalChannelSafeStorage" {
+  value = aws_vpc_endpoint_service.pn_confinfo_ecssin_endpoint_svc.service_name
+  description = "Service endpoint for External Channel and Safe storage connections"
+}
