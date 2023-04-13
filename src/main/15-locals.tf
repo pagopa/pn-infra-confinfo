@@ -54,28 +54,34 @@ locals {
 
 
 
-  HubSpid_FrontEndSubnetsIds = [
+  SpidHub_FrontEndSubnetsIds = [
       for idx, cidr in module.vpc_pn_spid_hub.public_subnets_cidr_blocks:
           module.vpc_pn_spid_hub.public_subnets[idx] 
             if contains( var.vpc_pn_spid_hub_public_subnets_cidr, cidr)
     ]
   
-  HubSpid_FrontEndSubnetsCidrs = [
+  SpidHub_FrontEndSubnetsCidrs = [
       for idx, cidr in module.vpc_pn_spid_hub.public_subnets_cidr_blocks:
           cidr
             if contains( var.vpc_pn_spid_hub_public_subnets_cidr, cidr)
     ]
   
 
-  HubSpid_BackEndSubnetsIds = [
+  SpidHub_BackEndSubnetsIds = [
       for idx, cidr in module.vpc_pn_spid_hub.private_subnets_cidr_blocks:
           module.vpc_pn_spid_hub.private_subnets[idx] 
             if contains( var.vpc_pn_spid_hub_private_subnets_cidr, cidr)
     ]
   
-  HubSpid_BackEndSubnetsCidrs = [
+  SpidHub_BackEndSubnetsCidrs = [
       for idx, cidr in module.vpc_pn_spid_hub.private_subnets_cidr_blocks:
           cidr
             if contains( var.vpc_pn_spid_hub_private_subnets_cidr, cidr)
+    ]
+  
+
+  SpidHub_InternalNlbIps = [
+      for idx, cidr in local.SpidHub_BackEndSubnetsCidrs:
+        cidrhost( cidr, 220 )
     ]
 }

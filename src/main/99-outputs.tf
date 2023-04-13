@@ -88,11 +88,11 @@ output "SpidHub_FrontEndVpcId" {
   description = "The Internet capable VPC Id"
 }
 output "SpidHub_FrontEndSubnets" {
-  value = local.HubSpid_FrontEndSubnetsIds
+  value = join(",", local.SpidHub_FrontEndSubnetsIds )
   description = "The FrontEnd NLB subnets ids"
 }
 output "SpidHub_FrontEndSubnetsCidrs" {
-  value = local.HubSpid_FrontEndSubnetsCidrs
+  value = join(",", local.SpidHub_FrontEndSubnetsCidrs )
   description = "The FrontEnd NLB subnets Cidr"
 }
 
@@ -101,16 +101,31 @@ output "SpidHub_BackEndVpcId" {
   description = "The private VPC Id"
 }
 output "SpidHub_BackEndSubnets" {
-  value = local.HubSpid_BackEndSubnetsIds
+  value = join(",", local.SpidHub_BackEndSubnetsIds )
   description = "The BackEnd NLB subnets ids"
 }
 output "SpidHub_BackEndSubnetsCidrs" {
-  value = local.HubSpid_BackEndSubnetsCidrs
+  value = join(",", local.SpidHub_BackEndSubnetsCidrs )
   description = "The BackEnd NLB subnets Cidr"
 }
 
+output "SpidHub_InternalNlbIps" {
+  value = join(",", local.SpidHub_InternalNlbIps )
+  description = "Internal NLB IPs"
+}
 
-    #"InternalNlbIps": "10.32.0.200,10.32.1.200,10.32.2.200",
-    #"DomainName": "spid.dev.pn.pagopa.it",
-    #"HostedZoneId": "Z0351442WB8RWGUHJSZ0",
-    #"HelpdeskAccountId": "498209326947"
+output "SpidHub_DomainName" {
+  value = var.dns_zone
+  description = "Spid services DNS"
+}
+
+output "SpidHub_HostedZoneId" {
+  value = local.account_root_dns_zone_id
+  description = "SPID DNS Hosted Zone Id"
+}
+
+output "SpidHub_HelpdeskAccountId" {
+  value = var.pn_core_aws_account_id
+  description = "Account id where helpdesk functionality are deployed"
+}
+
