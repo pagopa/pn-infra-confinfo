@@ -97,44 +97,21 @@ accounts:
       - code: pn-spid-hub
         name: PN SpidHub
         primary_cidr: 10.<vpc_idx>.0.0/16
-        aws_svc:
-          net: aws
-          interfaces_endpoints:
-            - "sqs"
-            - "logs"
-            - "sns"
-            - "kms"
-            - "kinesis-streams"
-            - "elasticloadbalancing"
-            - "events"
-            - "ecr.api"
-            - "ecr.dkr"
-            - "ssmmessages"
-            - "ssm"
-            - "ec2messages"
-            - "ecs-agent"
-            - "ecs-telemetry"
-            - "ecs"
         networks:
           - code: public
             name: Public
             gateway: 
               type: igw
             has_nat: true
-            first_net_ip: 10.<vpc_idx>.1.0
-            net_size: 16
+            first_net_ip: 10.<vpc_idx>.10.0
+            net_size: 256
 
           - code: private
             name: Private
             gateway: 
               type: nat
               network: public
-            first_net_ip: 10.<vpc_idx>.10.0
+            first_net_ip: 10.<vpc_idx>.40.0
             net_size: 256
           
-          - code: aws
-            name: AWS Services
-            gateway: null
-            first_net_ip: 10.<vpc_idx>.90.0
-            net_size: 256
 
