@@ -72,3 +72,40 @@ output "ConfInfo_ServiceEndpoint_ToExternalChannelSafeStorage" {
   value = aws_vpc_endpoint_service.pn_confinfo_ecssin_endpoint_svc.service_name
   description = "Service endpoint for External Channel and Safe storage connections"
 }
+
+
+
+
+
+
+output "SpidHub_FrontEndVpcId" {
+  value = module.vpc_pn_spid_hub.vpc_id
+  description = "The Internet capable VPC Id"
+}
+output "SpidHub_FrontEndSubnets" {
+  value = local.HubSpid_FrontEndSubnetsIds
+  description = "The FrontEnd NLB subnets ids"
+}
+output "SpidHub_FrontEndSubnetsCidrs" {
+  value = local.HubSpid_FrontEndSubnetsCidrs
+  description = "The FrontEnd NLB subnets Cidr"
+}
+
+output "SpidHub_BackEndVpcId" {
+  value = module.vpc_pn_spid_hub.vpc_id
+  description = "The private VPC Id"
+}
+output "SpidHub_BackEndSubnets" {
+  value = local.HubSpid_BackEndSubnetsIds
+  description = "The BackEnd NLB subnets ids"
+}
+output "SpidHub_BackEndSubnetsCidrs" {
+  value = local.HubSpid_BackEndSubnetsCidrs
+  description = "The BackEnd NLB subnets Cidr"
+}
+
+
+    #"InternalNlbIps": "10.32.0.200,10.32.1.200,10.32.2.200",
+    #"DomainName": "spid.dev.pn.pagopa.it",
+    #"HostedZoneId": "Z0351442WB8RWGUHJSZ0",
+    #"HelpdeskAccountId": "498209326947"
