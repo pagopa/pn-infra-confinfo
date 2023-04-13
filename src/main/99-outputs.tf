@@ -14,6 +14,11 @@ output "ConfInfo_EcsDefaultSecurityGroup" {
   description = "Default security group for ECS services"
 }
 
+output "ConfInfo_PnVPCDefaultSecurityGroup" {
+  value = module.vpc_pn_confinfo.default_security_group_id
+  description = "Default VPC security group"
+}
+
 output "ConfInfo_VpcEndpointsRequired" { 
   value       = "false"
   description = "AWS services endpoints already created"
