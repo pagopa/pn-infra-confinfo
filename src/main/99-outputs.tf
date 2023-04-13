@@ -9,6 +9,11 @@ output "ConfInfo_VpcCidr" {
   description = "CIDR della VPC contenete i microservizi di PN che trattano informazioni Personali"
 }
 
+output "ConfInfo_EcsDefaultSecurityGroup" {
+  value = ""
+  description = "Default security group for ECS services"
+}
+
 output "ConfInfo_VpcEndpointsRequired" { 
   value       = "false"
   description = "AWS services endpoints already created"
