@@ -83,6 +83,10 @@ output "ConfInfo_ServiceEndpoint_ToExternalChannelSafeStorage" {
   description = "Service endpoint for External Channel and Safe storage connections"
 }
 
+output "ConfInfo_PnCoreAwsAccountId" {
+  value = var.pn_core_aws_account_id
+  description = "AWS account id of pn-core. Usefull for resource policy and EventBridge Routes"
+}
 
 
 
