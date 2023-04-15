@@ -88,6 +88,11 @@ output "ConfInfo_PnCoreAwsAccountId" {
   description = "AWS account id of pn-core. Usefull for resource policy and EventBridge Routes"
 }
 
+output "ConfInfo_PnCoreTargetEventBus" {
+  value = "arn:aws:events:${var.aws_region}:${var.pn_core_aws_account_id}:event-bus/pn-CoreEventBus"
+  description = "pn-core event bridge bus"
+}
+
 
 
 
