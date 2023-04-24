@@ -90,18 +90,18 @@ resource "aws_vpc_endpoint_service" "pn_confinfo_dvin_endpoint_svc" {
   }
 }
 # - DataVault NLB listener for HTTP
-resource "aws_lb_listener" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
+resource "aws_lb_listener" "pn_confinfo_dvin_nlb_http_to_alb_http" {
   load_balancer_arn = aws_lb.pn_confinfo_dvin_nlb.arn
   protocol = "TCP"
   port     = 8080
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.pn_confinfo_dvin_nlb_8080_to_alb_8080.arn
+    target_group_arn = aws_lb_target_group.pn_confinfo_dvin_nlb_http_to_alb_http.arn
   }
 }
 # - DataVault NLB target group for HTTP
-resource "aws_lb_target_group" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
+resource "aws_lb_target_group" "pn_confinfo_dvin_nlb_http_to_alb_http" {
   name_prefix = "DvI-"
   vpc_id      = module.vpc_pn_confinfo.vpc_id
 
@@ -123,8 +123,8 @@ resource "aws_lb_target_group" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
     matcher = "200-499"
   }
 }
-resource "aws_lb_target_group_attachment" "pn_confinfo_dvin_nlb_8080_to_alb_8080" {
-  target_group_arn  = aws_lb_target_group.pn_confinfo_dvin_nlb_8080_to_alb_8080.arn
+resource "aws_lb_target_group_attachment" "pn_confinfo_dvin_nlb_http_to_alb_http" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_dvin_nlb_http_to_alb_http.arn
   port              = 8080
 
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
@@ -164,18 +164,18 @@ resource "aws_vpc_endpoint_service" "pn_confinfo_ecssin_endpoint_svc" {
   }
 }
 # - ExternalChannel e SafeStorage NLB listener for HTTP
-resource "aws_lb_listener" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
+resource "aws_lb_listener" "pn_confinfo_ecssin_nlb_http_to_alb_http" {
   load_balancer_arn = aws_lb.pn_confinfo_ecssin_nlb.arn
   protocol = "TCP"
   port     = 8080
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.pn_confinfo_ecssin_nlb_8080_to_alb_8080.arn
+    target_group_arn = aws_lb_target_group.pn_confinfo_ecssin_nlb_http_to_alb_http.arn
   }
 }
 # - ExternalChannel e SafeStorage NLB target group for HTTP
-resource "aws_lb_target_group" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
+resource "aws_lb_target_group" "pn_confinfo_ecssin_nlb_http_to_alb_http" {
   name_prefix = "EcssI-"
   vpc_id      = module.vpc_pn_confinfo.vpc_id
 
@@ -197,9 +197,78 @@ resource "aws_lb_target_group" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
     matcher = "200-499"
   }
 }
-resource "aws_lb_target_group_attachment" "pn_confinfo_ecssin_nlb_8080_to_alb_8080" {
-  target_group_arn  = aws_lb_target_group.pn_confinfo_ecssin_nlb_8080_to_alb_8080.arn
+resource "aws_lb_target_group_attachment" "pn_confinfo_ecssin_nlb_http_to_alb_http" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_ecssin_nlb_http_to_alb_http.arn
   port              = 8080
 
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
+}
+
+
+
+
+
+
+
+
+
+resource "aws_network_acl" "call_8080_do_not_receive" {
+  vpc_id = module.vpc_pn_confinfo.vpc_id
+
+  dynamic "egress" {
+    for_each = local.ConfInfo_SubnetsCidrs
+
+    content {
+      protocol   = "tcp"
+      rule_no    = 1000 + 100 * egress.key
+      action     = "allow"
+      cidr_block = egress.value
+      from_port  = 8080
+      to_port    = 8080
+    }
+  }
+
+  dynamic "ingress" {
+    for_each = local.ConfInfo_SubnetsCidrs
+
+    content {
+      protocol   = "tcp"
+      rule_no    = 1000 + 100 * ingress.key
+      action     = "allow"
+      cidr_block = ingress.value
+      from_port  = 1024
+      to_port    = 8079
+    }
+  }
+
+  dynamic "ingress" {
+    for_each = local.ConfInfo_SubnetsCidrs
+
+    content {
+      protocol   = "tcp"
+      rule_no    = 2000 + 100 * ingress.key
+      action     = "allow"
+      cidr_block = ingress.value
+      from_port  = 8081
+      to_port    = 65535
+    }
+  }
+
+  tags = {
+    Name = "Outbound 8080 to ALB not inbound"
+  }
+}
+
+resource "aws_network_acl_association" "nlb_dv" {
+  count = length( local.ConfInfo_NlbDv_SubnetsIds )
+
+  network_acl_id = aws_network_acl.call_8080_do_not_receive.id
+  subnet_id      = local.ConfInfo_NlbDv_SubnetsIds[ count.index ]
+}
+
+resource "aws_network_acl_association" "nlb_radd" {
+  count = length( local.ConfInfo_NlbEcss_SubnetsIds )
+
+  network_acl_id = aws_network_acl.call_8080_do_not_receive.id
+  subnet_id      = local.ConfInfo_NlbEcss_SubnetsIds[ count.index ]
 }
