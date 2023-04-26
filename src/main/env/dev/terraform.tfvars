@@ -2,12 +2,14 @@
 environment = "dev"
 how_many_az = 3
 dns_zone = "spid.dev.notifichedigitali.it"
-api_domains = []
+api_domains = ["api.pt"]
 cdn_domains = []
 apigw_custom_domains = []
   
 pn_core_aws_account_id = "830192246553"
 pn_confinfo_aws_account_id = "089813480515"
+pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+pn_postel_aws_account_id = "911845998067"
 
 
 vpc_pn_confinfo_name = "PN ConfInfo"
@@ -26,6 +28,7 @@ vpc_pn_confinfo_dvin_subnets_cidrs = ["10.2.2.0/28","10.2.2.16/28","10.2.2.32/28
 vpc_pn_confinfo_ecssin_subnets_cidrs = ["10.2.3.0/28","10.2.3.16/28","10.2.3.32/28"]
 vpc_pn_confinfo_confinfo_egres_subnets_cidrs = ["10.2.10.0/24","10.2.11.0/24","10.2.12.0/24"]
 vpc_pn_confinfo_confinfo_subnets_cidrs = ["10.2.30.0/24","10.2.31.0/24","10.2.32.0/24"]
+vpc_pn_confinfo_postel_subnets_cidrs = ["10.2.40.0/24","10.2.41.0/24","10.2.42.0/24"]
 
 
 

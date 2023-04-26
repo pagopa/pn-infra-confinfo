@@ -51,7 +51,17 @@ locals {
             if contains( var.vpc_pn_confinfo_ecssin_subnets_cidrs, cidr)
     ]
   
-
+  ConfInfo_NlbPostel_SubnetsIds = [
+      for idx, cidr in module.vpc_pn_confinfo.intra_subnets_cidr_blocks:
+          module.vpc_pn_confinfo.intra_subnets[idx] 
+            if contains( var.vpc_pn_confinfo_postel_subnets_cidrs, cidr)
+    ]
+  
+  ConfInfo_NlbPostel_SubnetsCidrs = [
+      for idx, cidr in module.vpc_pn_confinfo.intra_subnets_cidr_blocks:
+          cidr
+            if contains( var.vpc_pn_confinfo_postel_subnets_cidrs, cidr)
+    ]
 
 
   SpidHub_FrontEndSubnetsIds = [

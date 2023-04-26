@@ -103,3 +103,51 @@ module "vpc_endpoints_pn_confinfo" {
 }
 
 
+
+
+
+resource "aws_security_group" "vpc_pn_confinfo__secgrp_topostel" {
+  
+  name_prefix = "pn-core_vpc-topostel-secgrp"
+  description = "Allow traffic to postel"
+  vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  ingress {
+    description = "8080 from VPC"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
+  }
+  ingress {
+    description = "443 from VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
+  }
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+# PRIVATE LINK ENDPOINTS TO Postel (Aka Consolidatore)
+resource "aws_vpc_endpoint" "to_postel" {
+  count = (var.pn_confinfo_to_postel_vpcse != "none") ? 1 : 0
+
+  vpc_id            = module.vpc_pn_confinfo.vpc_id
+  service_name      = var.pn_confinfo_to_postel_vpcse
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [ aws_security_group.vpc_pn_confinfo__secgrp_topostel.id ]
+
+  subnet_ids          = local.ConfInfo_NlbPostel_SubnetsIds
+  private_dns_enabled = false
+
+  tags                = { Name = "Endpoint to postel"}
+}
