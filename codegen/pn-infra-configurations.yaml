@@ -14,9 +14,18 @@ envs:
       - code: pn-confinfo
         base_dns: spid.dev.notifichedigitali.it
         aws_id: "089813480515"  # Stringhe non numeri
+        vpcse:
+          # - Va valorizzato con l'endpoint fornito da postel per contattare il consolidatore
+          #to_postel: "none"
+          to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+      - code: pn-postel
+        aws_id: "911845998067"  # Stringhe non numeri
 
 accounts:
   - code: pn-confinfo
+    dns:
+      api:
+        - api.pt
     has_apigw: false
     vpcs:
       - code: pn-confinfo
@@ -87,6 +96,7 @@ accounts:
             gateway: null
             first_net_ip: 10.<vpc_idx>.40.0
             net_size: 256
+            nlb: true
           
           - code: aws
             name: AWS Services

@@ -82,6 +82,10 @@ output "ConfInfo_ServiceEndpoint_ToExternalChannelSafeStorage" {
   value = aws_vpc_endpoint_service.pn_confinfo_ecssin_endpoint_svc.service_name
   description = "Service endpoint for External Channel and Safe storage connections"
 }
+output "ConfInfo_ServiceEndpoint_FromConsolidatore" {
+  value = aws_vpc_endpoint_service.pn_confinfo_postel_endpoint_svc.service_name
+  description = "Service endpoint for External Channel and Safe storage connections"
+}
 
 output "ConfInfo_PnCoreAwsAccountId" {
   value = var.pn_core_aws_account_id

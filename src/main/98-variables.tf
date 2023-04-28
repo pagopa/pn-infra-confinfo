@@ -26,6 +26,11 @@ variable "pn_confinfo_aws_account_id" {
   description = "pn-confidential current environment AWS Account id"
 }
 
+variable "pn_postel_aws_account_id" {
+  type        = string
+  description = "current environment AWS Account id where postel has deployed PN connecting software"
+}
+
 
 variable "dns_zone" {
   type        = string
@@ -127,6 +132,16 @@ variable "vpc_pn_confinfo_ecssin_subnets_cidrs" {
   description = "Cidr list of ExternalChannel and SafeStorage Ingress subnets in VPC pn-confinfo"
 }
 
+variable "vpc_pn_confinfo_postel_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of Postel interconnection subnets in VPC pn-confinfo"
+}
+
+
+variable "pn_confinfo_to_postel_vpcse" {
+  type        = string
+  description = "Postel VPC Service endpoint exposing 'consolidatore' services"
+}
 
 
 
