@@ -42,6 +42,27 @@ envs:
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
+  uat:
+    vpcs:
+      - code: pn-confinfo
+        idx: 7 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
+      - code: pn-spid-hub
+        idx: 8 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
+    azs: 3
+    accounts:
+      - code: pn-core
+        base_dns: uat.notifichedigitali.it
+        aws_id: "644374009812" # Stringhe non numeri
+      - code: pn-confinfo
+        base_dns: spid.uat.notifichedigitali.it
+        aws_id: "956319218727"  # Stringhe non numeri
+        vpcse:
+          # - Va valorizzato con l'endpoint fornito da postel per contattare il consolidatore
+          #to_postel: "none"
+          to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+      - code: pn-postel
+        aws_id: "911845998067"  # Stringhe non numeri
+
 
 accounts:
   - code: pn-confinfo
