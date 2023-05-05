@@ -45,9 +45,9 @@ envs:
   uat:
     vpcs:
       - code: pn-confinfo
-        idx: 7 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
-      - code: pn-spid-hub
         idx: 8 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
+      - code: pn-spid-hub
+        idx: 9 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
     azs: 3
     accounts:
       - code: pn-core
