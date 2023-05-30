@@ -40,7 +40,7 @@ envs:
           #to_postel: "none"
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
       - code: pn-postel
-        aws_id: "911845998067"  # Stringhe non numeri
+        aws_id: "554102482368"  # Stringhe non numeri
 
   uat:
     vpcs:
