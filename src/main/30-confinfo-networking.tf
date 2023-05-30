@@ -146,7 +146,8 @@ resource "aws_vpc_endpoint" "to_postel" {
 
   security_group_ids = [ aws_security_group.vpc_pn_confinfo__secgrp_topostel.id ]
 
-  subnet_ids          = local.ConfInfo_NlbPostel_SubnetsIds
+  #subnet_ids          = local.ConfInfo_NlbPostel_SubnetsIds
+  subnet_ids          = local.ConfInfo_SubnetsIds
   private_dns_enabled = false
 
   tags                = { Name = "Endpoint to postel"}
