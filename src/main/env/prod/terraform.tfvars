@@ -8,8 +8,8 @@ apigw_custom_domains = []
   
 pn_core_aws_account_id = "510769970275"
 pn_confinfo_aws_account_id = "350578575906"
-pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
-pn_postel_aws_account_id = "911845998067"
+pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-0b01face6c74fe25f"
+pn_postel_aws_account_id = "350387752612"
 
 
 vpc_pn_confinfo_name = "PN ConfInfo"

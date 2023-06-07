@@ -80,9 +80,9 @@ envs:
         vpcse:
           # - Va valorizzato con l'endpoint fornito da postel per contattare il consolidatore
           #to_postel: "none"
-          to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+          to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-0b01face6c74fe25f"
       - code: pn-postel
-        aws_id: "911845998067"  # Stringhe non numeri
+        aws_id: "350387752612"  # Stringhe non numeri
 
 
 accounts:
