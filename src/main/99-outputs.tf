@@ -47,6 +47,12 @@ output "ConfInfo_ApplicationLoadBalancerArn" {
   description = "ECS cluster Application Load Balancer ARN, attach microservice listeners here"
 }
 
+output "ConfInfo_ApplicationLoadBalancerMetricsDimensionName" {
+  value = replace( aws_lb.pn_confinfo_ecs_alb.arn, "/.*:[0-9]{12}:loadbalancer.app.(.*)/", "app/$1")
+  description = "ECS cluster Application Load Balancer name used for metrics"
+}
+
+
 output "ConfInfo_ApplicationLoadBalancerAwsDns" {
   value = aws_lb.pn_confinfo_ecs_alb.dns_name 
   description = "ECS cluster Application Load Balancer AWS released DNS, can be used to call microservices"
