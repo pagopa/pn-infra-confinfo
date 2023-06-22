@@ -84,6 +84,26 @@ envs:
       - code: pn-postel
         aws_id: "350387752612"  # Stringhe non numeri
 
+  hotfix:
+    vpcs:
+      - code: pn-confinfo
+        idx: 13 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
+      - code: pn-spid-hub
+        idx: 14 # Secondo ottetto della VPC, deve essere non sovrapposto con altre VPC di altri ambienti
+    azs: 3
+    accounts:
+      - code: pn-core
+        base_dns: hotfix.notifichedigitali.it
+        aws_id: "207905393513" # Stringhe non numeri
+      - code: pn-confinfo
+        base_dns: spid.hotfix.notifichedigitali.it
+        aws_id: "839620963891"  # Stringhe non numeri
+        vpcse:
+          # - Va valorizzato con l'endpoint fornito da postel per contattare il consolidatore
+          #to_postel: "none"
+          to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+      - code: pn-postel
+        aws_id: "911845998067"  # Stringhe non numeri
 
 accounts:
   - code: pn-confinfo
@@ -116,7 +136,6 @@ accounts:
             - "secretsmanager"
             - "monitoring"
             - "xray"
-            - "ses"
         networks:
           - code: public
             name: Public
