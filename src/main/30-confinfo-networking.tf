@@ -47,6 +47,11 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_tls" {
   description = "Allow TLS inbound traffic"
   vpc_id      = module.vpc_pn_confinfo.vpc_id
 
+  tags = {
+    "pn-eni-related": "true",
+    "pn-eni-related-groupName-regexp": "^pn-confinfo_vpc-tls-.*$"
+  }
+  
   ingress {
     description = "TLS from VPC"
     from_port   = 443
@@ -111,6 +116,11 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_topostel" {
   name_prefix = "pn-core_vpc-topostel-secgrp"
   description = "Allow traffic to postel"
   vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  tags = {
+    "pn-eni-related": "true",
+    "pn-eni-related-groupName-regexp": "^pn-core_vpc-topostel-.*$"
+  }
 
   ingress {
     description = "8080 from VPC"
