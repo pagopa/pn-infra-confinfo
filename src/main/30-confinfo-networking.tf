@@ -49,7 +49,7 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_tls" {
 
   tags = {
     "pn-eni-related": "true",
-    "pn-eni-related-groupName-regexp": "^pn-confinfo_vpc-tls-.*$"
+    "pn-eni-related-groupName-regexp": base64encode("^pn-confinfo_vpc-tls-.*$")
   }
   
   ingress {
@@ -119,7 +119,7 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_topostel" {
 
   tags = {
     "pn-eni-related": "true",
-    "pn-eni-related-groupName-regexp": "^pn-core_vpc-topostel-.*$"
+    "pn-eni-related-groupName-regexp": base64encode("^pn-core_vpc-topostel-.*$")
   }
 
   ingress {
