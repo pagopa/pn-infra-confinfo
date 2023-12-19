@@ -79,7 +79,7 @@ resource "aws_lb" "pn_confinfo_dvin_nlb" {
   tags = {
     "Name": "PN ConfInfo - DataVault Ingress - NLB",
     "pn-eni-related": "true",
-    "pn-eni-related-groupName-regexp": base64encode("^ELB net/DvI-.*$")
+    "pn-eni-related-description-regexp": base64encode("^ELB net/DvI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a Data Vault
@@ -155,7 +155,7 @@ resource "aws_lb" "pn_confinfo_ecssin_nlb" {
   tags = {
     "Name": "PN ConfInfo - ExternalChannel and SafeStorage Ingress - NLB",
     "pn-eni-related": "true",
-    "pn-eni-related-groupName-regexp": base64encode("^ELB net/EcssI-.*$")
+    "pn-eni-related-description-regexp": base64encode("^ELB net/EcssI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a ExternalChannel e SafeStorage
@@ -232,7 +232,7 @@ resource "aws_lb" "pn_confinfo_postel_nlb" {
   tags = {
     "Name": "PN Confinfo - Postel Ingress - NLB",
     "pn-eni-related": "true",
-    "pn-eni-related-groupName-regexp": base64encode("^ELB net/PtI-.*$")
+    "pn-eni-related-description-regexp": base64encode("^ELB net/PtI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a pn-external-channel da parte del consolidatore
