@@ -36,6 +36,8 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
 
   tags = {
     "Name": "PN ConfInfo - ECS Cluster - ALB"
+    "pn-eni-related": "true",
+    "pn-eni-related-groupName-regexp": base64encode("^pn-confinfo_vpc-webapp-secgrp.*$")
   }
 }
 # - ECS cluster Application load balancer HTTP listener
@@ -65,7 +67,6 @@ resource "aws_lb" "pn_confinfo_dvin_nlb" {
   ip_address_type = "ipv4"
   load_balancer_type = "network"
 
-
   dynamic "subnet_mapping" {
     for_each = range(var.how_many_az)
 
@@ -76,7 +77,9 @@ resource "aws_lb" "pn_confinfo_dvin_nlb" {
   }
 
   tags = {
-    "Name": "PN ConfInfo - DataVault Ingress - NLB"
+    "Name": "PN ConfInfo - DataVault Ingress - NLB",
+    "pn-eni-related": "true",
+    "pn-eni-related-description-regexp": base64encode("^ELB net/DvI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a Data Vault
@@ -150,7 +153,9 @@ resource "aws_lb" "pn_confinfo_ecssin_nlb" {
   }
 
   tags = {
-    "Name": "PN ConfInfo - ExternalChannel and SafeStorage Ingress - NLB"
+    "Name": "PN ConfInfo - ExternalChannel and SafeStorage Ingress - NLB",
+    "pn-eni-related": "true",
+    "pn-eni-related-description-regexp": base64encode("^ELB net/EcssI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a ExternalChannel e SafeStorage
@@ -225,7 +230,9 @@ resource "aws_lb" "pn_confinfo_postel_nlb" {
   }
 
   tags = {
-    "Name": "PN Confinfo - Postel Ingress - NLB"
+    "Name": "PN Confinfo - Postel Ingress - NLB",
+    "pn-eni-related": "true",
+    "pn-eni-related-description-regexp": base64encode("^ELB net/PtI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a pn-external-channel da parte del consolidatore
