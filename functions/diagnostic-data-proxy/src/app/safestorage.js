@@ -12,6 +12,12 @@ import { getSafeStorageBucket, getS3AWSRegion } from './config.js';
 const client = new S3Client({ region: getS3AWSRegion() });
 const bucket = getSafeStorageBucket();
 
+/**
+ * Initiates the restoration of an object from S3 Glacier storage.
+ *
+ * @param {string} bucket - The name of the S3 bucket containing the object.
+ * @param {string} key - The key of the object to restore.
+ */
 const restoreObject = async (bucket, key) => {
   const input = {
     Bucket: bucket,
@@ -33,6 +39,13 @@ const restoreObject = async (bucket, key) => {
   }
 };
 
+/**
+ * Checks the metadata of an S3 object including storage class and restoration status.
+ * It also retrieves object tags and retention information if available.
+ *
+ * @param {string} aarKey - The S3 object key, prefixed with "safestorage://".
+ * @return {Promise<Object>} An object containing metadata about the S3 object.
+ */
 export const headObject = async (aarKey) => {
   const key = aarKey.replace('safestorage://', '');
   console.log('Bucket: ', bucket);
@@ -51,6 +64,7 @@ export const headObject = async (aarKey) => {
   let isRestoring = false;
   let restored = false;
 
+  // Try to get object metadata
   try {
     const response = await client.send(headObjectCommand);
     found = true;
@@ -69,6 +83,7 @@ export const headObject = async (aarKey) => {
     };
   }
 
+  // Retrieve object tagging information
   try {
     const taggingResponse = await client.send(getObjectTaggingCommand);
     tags = taggingResponse.TagSet;
@@ -76,6 +91,7 @@ export const headObject = async (aarKey) => {
     console.error("Errore durante il recupero dei tag dell'oggetto:", err);
   }
 
+  // Retrieve object retention information
   try {
     const retentionResponse = await client.send(getObjectRetentionCommand);
     retention = retentionResponse.Retention;
@@ -97,6 +113,13 @@ export const headObject = async (aarKey) => {
   };
 };
 
+/**
+ * Retrieves an object from S3 or initiates a restore if the object is in Glacier.
+ * Generates a signed URL for accessing the object if it is immediately available.
+ *
+ * @param {string} aarKey - The S3 object key, prefixed with "safestorage://".
+ * @return {Promise<Object>} An object containing the state of the object retrieval or restore process.
+ */
 export const getObject = async (aarKey) => {
   const key = aarKey.replace('safestorage://', '');
   const input = {
@@ -112,7 +135,8 @@ export const getObject = async (aarKey) => {
       headResponse.StorageClass === 'DEEP_ARCHIVE'
     ) {
       if (!headResponse.Restore) {
-        await restoreObject(bucket, key); // Avvia il restore se necessario
+        // Initiate restore if not yet started.
+        await restoreObject(bucket, key);
         return {
           aarKey,
           state: 'RESTORING',
@@ -128,6 +152,7 @@ export const getObject = async (aarKey) => {
     }
 
     const getObjectCommand = new GetObjectCommand(input);
+    // Generate a signed URL for direct object access if not in Glacier or already restored.
     const url = await getSignedUrl(client, getObjectCommand, {
       expiresIn: 5 * 60,
     }); // 5 minutes

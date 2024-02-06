@@ -1,6 +1,13 @@
 import { getObject, headObject } from "./safestorage.js";
 import { getEvents } from "./ecRichiesteMetadati.js";
 
+/**
+ * Handles an event by executing different actions based on the event's details.
+ *
+ * @param {Object} event - The event to handle, containing an action and a payload.
+ * @return {Promise<Object>} A promise that resolves to an object with a statusCode and a body.
+ *                           The body contains the result of the action, if successful.
+ */
 export const handleEvent = async (event) => {
   const { action, payload } = event;
   
