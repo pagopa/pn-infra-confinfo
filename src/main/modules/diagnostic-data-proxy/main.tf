@@ -1,10 +1,3 @@
-# Data source to retrieve the checksum of the Lambda function code stored in an S3 bucket
-data "aws_s3_object" "lambda_code_object" {
-  count  = var.filename == null ? 1 : 0
-  bucket = var.s3_code_bucket
-  key    = var.s3_code_key
-}
-
 # Lambda function resource definition
 resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
   function_name = var.function_name
@@ -17,11 +10,7 @@ resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
   role          = aws_iam_role.lambda_role.arn
 
   # Dynamically calculates source code hash based on if the code is uploaded as a file or from S3
-  source_code_hash = (var.filename != null ?
-    filebase64sha256(var.filename) : null)
-  # sha256(data.aws_s3_object.lambda_code_object.last_modified))
-  #   data.aws_s3_object.lambda_code_object.checksum_sha256)
-  # Update aws provider version to have checksum_sha256
+  source_code_hash = (var.filename != null ? filebase64sha256(var.filename) : sha256(var.s3_code_key))
 
   # Environment variables for the Lambda function
   environment {
