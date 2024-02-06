@@ -5,7 +5,7 @@ locals {
   data_proxy_filename      = "${path.root}/../../functions/diagnostic-data-proxy/function.zip"
   data_proxy_runtime       = "nodejs18.x"
   data_proxy_role_callers = [
-    "diagnostic-get-timelin-element-events-Role",
+    "diagnostic-get-timeline-element-events-Role",
     "diagnostic-get-file-Role"
   ]
 }
