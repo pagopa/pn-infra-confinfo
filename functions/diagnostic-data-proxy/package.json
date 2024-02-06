@@ -1,0 +1,19 @@
+{
+    "name": "diagnostic-get-file",
+    "version": "1.0.0",
+    "description": "Data proxy for pn-core lambdas.",
+    "main": "index.js",
+    "type": "module",
+    "author": "Giacomo Vallorani",
+    "license": "ISC",
+    "scripts": {
+        "test-build": "npm run-script build",
+        "build": "npm prune --production && rm -f ./function.zip && zip -r ./function.zip . -x './src/test/*' -x '*.md' -x '*.env'  -x '*.gitignore'"
+    },
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.506.0",
+        "@aws-sdk/client-s3": "^3.504.0",
+        "@aws-sdk/lib-dynamodb": "^3.506.0",
+        "@aws-sdk/s3-request-presigner": "^3.504.0"
+    }
+}
