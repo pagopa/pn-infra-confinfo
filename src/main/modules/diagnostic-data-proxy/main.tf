@@ -18,8 +18,8 @@ resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
 
   # Dynamically calculates source code hash based on if the code is uploaded as a file or from S3
   source_code_hash = (var.filename != null ?
-    filebase64sha256(var.filename) :
-  sha256(data.aws_s3_object.lambda_code_object.last_modified))
+    filebase64sha256(var.filename) : null)
+  # sha256(data.aws_s3_object.lambda_code_object.last_modified))
   #   data.aws_s3_object.lambda_code_object.checksum_sha256)
   # Update aws provider version to have checksum_sha256
 
