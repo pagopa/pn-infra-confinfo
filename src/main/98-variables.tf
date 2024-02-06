@@ -196,20 +196,3 @@ variable "vpc_endpoints_pn_spid_hub" {
   type        = list(string)
   description = "Endpoint List"
 }
-
-// *********** DIAGNOSTICS ***********
-variable "lambda_s3_code_bucket" {
-  type        = string
-  description = "The name of the S3 bucket where the Lambda function code is stored."
-  default = null
-}
-variable "diagnostic_data_proxy_s3_code_key" {
-  type        = string
-  description = "The S3 key (path) where the Lambda function code is stored within the specified S3 bucket."
-  default = null
-}
-variable "diagnostic_data_proxy_runtime" {
-  type        = string
-  description = "Specifies the runtime version to be used."
-  default = "nodejs18.x"
-}
