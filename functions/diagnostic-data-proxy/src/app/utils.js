@@ -39,8 +39,8 @@ export const checkKeys = (obj, keysAndTypes) => {
  * 'statusCode' and a 'body' property.
  */
 export const makeResponse = (statusCode, body) => {
-  return JSON.stringify({
+  return {
     statusCode,
-    body
-  });
+    body: JSON.stringify(body)
+  };
 };
