@@ -1,4 +1,5 @@
 #!/bin/sh
 
-cd ./diagnostic-data-proxy
-npm run test-build
+for folder in */ ; do
+  ( cd "$folder" && npm run test-build )
+done
