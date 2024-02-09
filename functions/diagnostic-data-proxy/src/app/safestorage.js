@@ -9,6 +9,8 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getSafeStorageBucket, getS3AWSRegion } from './config.js';
 
+const urlExpiresInSeconds = 60 * 5;
+
 const client = new S3Client({ region: getS3AWSRegion() });
 const bucket = getSafeStorageBucket();
 
@@ -32,22 +34,22 @@ const restoreObject = async (bucket, key) => {
   const restoreObjectCommand = new RestoreObjectCommand(input);
   try {
     await client.send(restoreObjectCommand);
-    console.log('Restore iniziato per:', key);
+    console.log('Restore initiated for:', key);
   } catch (err) {
-    console.error("Errore durante il restore dell'oggetto:", err);
+    console.error('Error during object restore:', err);
     throw err;
   }
 };
 
 /**
- * Checks the metadata of an S3 object including storage class and restoration status.
- * It also retrieves object tags and retention information if available.
+ * Checks the metadata of an S3 object including storage class and restoration
+ * status. It also retrieves object tags and retention information if available.
  *
- * @param {string} aarKey - The S3 object key, prefixed with "safestorage://".
+ * @param {string} fileKey - The S3 object key, prefixed with "safestorage://".
  * @return {Promise<Object>} An object containing metadata about the S3 object.
  */
-export const headObject = async (aarKey) => {
-  const key = aarKey.replace('safestorage://', '');
+export const headObject = async (fileKey) => {
+  const key = fileKey.replace('safestorage://', '');
   console.log('Bucket: ', bucket);
 
   const input = {
@@ -76,9 +78,9 @@ export const headObject = async (aarKey) => {
       restored = response.Restore.includes('ongoing-request="false"');
     }
   } catch (err) {
-    console.error("Errore durante il recupero dell'oggetto:", err);
+    console.error('Error retrieving the object:', err);
     return {
-      aarKey,
+      fileKey,
       found,
     };
   }
@@ -88,7 +90,7 @@ export const headObject = async (aarKey) => {
     const taggingResponse = await client.send(getObjectTaggingCommand);
     tags = taggingResponse.TagSet;
   } catch (err) {
-    console.error("Errore durante il recupero dei tag dell'oggetto:", err);
+    console.error("Error retrieving object's tags:", err);
   }
 
   // Retrieve object retention information
@@ -96,14 +98,11 @@ export const headObject = async (aarKey) => {
     const retentionResponse = await client.send(getObjectRetentionCommand);
     retention = retentionResponse.Retention;
   } catch (err) {
-    console.error(
-      'Errore durante il recupero delle informazioni di retention:',
-      err,
-    );
+    console.error("Error retrieving object's retention information:", err);
   }
 
   return {
-    aarKey,
+    fileKey,
     found,
     glacier,
     isRestoring,
@@ -114,14 +113,16 @@ export const headObject = async (aarKey) => {
 };
 
 /**
- * Retrieves an object from S3 or initiates a restore if the object is in Glacier.
- * Generates a signed URL for accessing the object if it is immediately available.
+ * Retrieves an object from S3 or initiates a restore if the object is in
+ * Glacier. Generates a signed URL for accessing the object if it is immediately
+ * available.
  *
- * @param {string} aarKey - The S3 object key, prefixed with "safestorage://".
- * @return {Promise<Object>} An object containing the state of the object retrieval or restore process.
+ * @param {string} fileKey - The S3 object key, prefixed with "safestorage://".
+ * @return {Promise<Object>} An object containing the state of the object
+ * retrieval or restore process.
  */
-export const getObject = async (aarKey) => {
-  const key = aarKey.replace('safestorage://', '');
+export const getObject = async (fileKey) => {
+  const key = fileKey.replace('safestorage://', '');
   const input = {
     Bucket: bucket,
     Key: key,
@@ -138,15 +139,15 @@ export const getObject = async (aarKey) => {
         // Initiate restore if not yet started.
         await restoreObject(bucket, key);
         return {
-          aarKey,
+          fileKey,
           state: 'RESTORING',
-          message: "Restore dell'oggetto iniziato. Riprovare più tardi.",
+          message: "Object restore initiated. Please try again later.",
         };
       } else if (headResponse.Restore.includes('ongoing-request="true"')) {
         return {
-          aarKey,
+          fileKey,
           state: 'RESTORING',
-          message: "Restore dell'oggetto già iniziato. Riprovare più tardi.",
+          message: "Object restore already in progress. Please try again later.",
         };
       }
     }
@@ -154,16 +155,16 @@ export const getObject = async (aarKey) => {
     const getObjectCommand = new GetObjectCommand(input);
     // Generate a signed URL for direct object access if not in Glacier or already restored.
     const url = await getSignedUrl(client, getObjectCommand, {
-      expiresIn: 5 * 60,
-    }); // 5 minutes
-    console.log(url);
+      expiresIn: urlExpiresInSeconds,
+    });
     return {
-      aarKey,
+      fileKey,
       state: 'URL_GENERATED',
       url,
     };
   } catch (err) {
-    console.error("Errore durante la generazione dell'URL dell'oggetto:", err);
+    err.message = err.name;
+    console.error("Error generating object's URL:", err);
     throw err;
   }
 };
