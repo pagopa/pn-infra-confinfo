@@ -5,9 +5,9 @@ locals {
   data_proxy_filename      = "${path.root}/../../functions/diagnostic-data-proxy/function.zip"
   data_proxy_runtime       = "nodejs18.x"
   data_proxy_role_callers = [
-    "diagnostic-get-timeline-element-events-Role",
-    "diagnostic-get-file-Role"
+    "diagnostic-tools-ExecutionRole"
   ]
+  data_proxy_role_callers_account_id = var.pn_core_aws_account_id
 }
 
 # Configuring and deploying the Lambda 
@@ -40,10 +40,12 @@ resource "aws_iam_role" "diagnostic_role" {
         },
         Condition = {
           ArnEquals = {
-            "aws:PrincipalArn" = [for role in local.data_proxy_role_callers : "arn:aws:iam::${var.pn_core_aws_account_id}:role/service-role/${role}"]
+            "aws:PrincipalArn" = [
+              for role in local.data_proxy_role_callers :
+              "arn:aws:iam::${local.data_proxy_role_callers_account_id}:role/${role}"
+            ]
           }
         }
-        Sid = ""
       },
     ],
   })
