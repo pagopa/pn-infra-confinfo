@@ -1,3 +1,6 @@
+locals {
+  dynamoTables = ["pn-EcRichiesteMetadati"]
+}
 # Lambda function resource definition
 resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
   function_name = var.function_name
@@ -87,7 +90,10 @@ resource "aws_iam_role_policy" "lambda_dynamo_policy" {
           "dynamodb:GetItem",
           "dynamodb:Query"
         ]
-        Resource = "arn:aws:dynamodb:${var.aws_region}:${var.pn_confinfo_aws_account_id}:*"
+        Resource = [
+          for table in local.dynamoTables :
+          "arn:aws:dynamodb:${var.aws_region}:${var.pn_confinfo_aws_account_id}:table/${table}"
+        ]
       },
       {
         Effect = "Allow",
