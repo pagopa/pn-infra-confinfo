@@ -7,9 +7,11 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { getSafeStorageBucket, getS3AWSRegion } from './config.js';
+import { getSafeStorageBucket, getS3AWSRegion, getUrlExpiresSeconds } from './config.js';
 
-const urlExpiresInSeconds = 60 * 5;
+const DEFAULT_EXPIRATION_SECONDS = 60 * 5; // 5 minutes default
+
+const urlExpiresInSeconds = getUrlExpiresSeconds() ?? DEFAULT_EXPIRATION_SECONDS;
 
 const client = new S3Client({ region: getS3AWSRegion() });
 const bucket = getSafeStorageBucket();
