@@ -35,3 +35,16 @@ export const getDynamoAWSRegion = () =>
  * @return {string} The AWS region for S3.
  */
 export const getS3AWSRegion = () => getEnvironmentVariable('S3_AWS_REGION');
+
+/**
+* Gets the generated url expiration in seconds.
+*
+* @return {number} The url expiration in seconds, undefined otherwise.
+*/
+export const getUrlExpiresSeconds = () => {
+  try{
+    return parseInt(getEnvironmentVariable('URL_EXPIRES_SECONDS'));
+  } catch (e){
+    return undefined;
+  }
+};
