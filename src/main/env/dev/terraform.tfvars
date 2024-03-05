@@ -9,6 +9,8 @@ apigw_custom_domains = []
 pn_core_aws_account_id = "830192246553"
 pn_confinfo_aws_account_id = "089813480515"
 pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
+pn_cost_anomaly_detection_threshold = "30"
 pn_postel_aws_account_id = "911845998067"
 
 

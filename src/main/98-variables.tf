@@ -196,3 +196,13 @@ variable "vpc_endpoints_pn_spid_hub" {
   type        = list(string)
   description = "Endpoint List"
 }
+
+variable "pn_cost_anomaly_detection_email" {
+  type        = string
+  description = "pn-core cost anomaly detection email"
+}
+
+variable "pn_cost_anomaly_detection_threshold" {
+  type        = string
+  description = "pn-core cost anomaly detection threshold (percentage)"
+}
