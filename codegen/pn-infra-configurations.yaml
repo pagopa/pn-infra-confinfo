@@ -20,7 +20,7 @@ envs:
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
-          pn_cost_anomaly_detection_threshold: "30"
+          pn_cost_anomaly_detection_threshold: "10"
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
@@ -44,7 +44,7 @@ envs:
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-0a03e3680c586118c"
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
-          pn_cost_anomaly_detection_threshold: "30"
+          pn_cost_anomaly_detection_threshold: "10"
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
 
@@ -68,7 +68,7 @@ envs:
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
-          pn_cost_anomaly_detection_threshold: "30"
+          pn_cost_anomaly_detection_threshold: "10"
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
@@ -92,7 +92,7 @@ envs:
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-0b01face6c74fe25f"
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
-          pn_cost_anomaly_detection_threshold: "30"
+          pn_cost_anomaly_detection_threshold: "10"
       - code: pn-postel
         aws_id: "350387752612"  # Stringhe non numeri
 
@@ -116,7 +116,7 @@ envs:
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
-          pn_cost_anomaly_detection_threshold: "30"
+          pn_cost_anomaly_detection_threshold: "10"
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
