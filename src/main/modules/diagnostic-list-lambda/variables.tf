@@ -1,6 +1,6 @@
 variable "function_name" {
   type        = string
-  default     = "diagnostic-data-proxy"
+  default     = "diagnostic-list-lambda"
   description = "The name of the Lambda."
 }
 
@@ -75,18 +75,6 @@ variable "confinfo_asuume_role_arn" {
   type        = string
   default     = "none"
   description = "Role to assume in confinfo."
-}
-
-variable "vpc_id" {
-  type        = string
-  default     = null
-  description = "VPC id"
-}
-
-variable "vpc_subnet_ids" {
-  type        = list(string)
-  default     = []
-  description = "VPC subent ids"
 }
 
 variable "lambda_tags" {

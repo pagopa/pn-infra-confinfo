@@ -8,7 +8,7 @@ locals {
     "diagnostic-list-lambda-ExecutionRole"
   ]
   diagnostic_role_callers_account_id = var.pn_core_aws_account_id
-  diagnostic_role_prefix   = "Diagnostic"
+  diagnostic_role_prefix             = "Diagnostic"
 
   safestorage_bucket       = "pn-safestorage-${var.aws_region}-${var.pn_confinfo_aws_account_id}"
   data_proxy_function_name = "diagnostic-data-proxy"
@@ -84,8 +84,8 @@ resource "aws_iam_role_policy" "diagnostic_lambda_invoke_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
-        Action   = "lambda:InvokeFunction",
+        Effect = "Allow",
+        Action = "lambda:InvokeFunction",
         Resource = [
           module.diagnostic_data_proxy.function_arn,
           module.diagnostic_list_lambda.function_arn
