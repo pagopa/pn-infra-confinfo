@@ -12,11 +12,13 @@ locals {
 
   safestorage_bucket       = "pn-safestorage-${var.aws_region}-${var.pn_confinfo_aws_account_id}"
   data_proxy_function_name = "diagnostic-data-proxy"
-  data_proxy_filename      = "${path.root}/../../functions/diagnostic-data-proxy/function.zip"
+  data_proxy_current_build = file("${path.root}/../../functions/diagnostic-data-proxy/.current_build")
+  data_proxy_filename      = "${path.root}/../../functions/diagnostic-data-proxy/${local.data_proxy_current_build}"
   data_proxy_runtime       = "nodejs18.x"
 
   list_lambda_function_name = "diagnostic-list-lambda"
-  list_lambda_filename      = "${path.root}/../../functions/diagnostic-list-lambda/function.zip"
+  list_lambda_current_build = file("${path.root}/../../functions/diagnostic-list-lambda/.current_build")
+  list_lambda_filename      = "${path.root}/../../functions/diagnostic-list-lambda/${local.list_lambda_current_build}"
   list_lambda_runtime       = "nodejs18.x"
 }
 

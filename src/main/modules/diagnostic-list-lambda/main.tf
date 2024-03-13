@@ -11,9 +11,6 @@ resource "aws_lambda_function" "diagnostic_list_lambda" {
   role          = aws_iam_role.lambda_role.arn
   tags          = var.lambda_tags
 
- # Dynamically calculates source code hash based on if the code is uploaded as a file or from S3
-  source_code_hash = (var.filename != null ? filebase64sha256(var.filename) : sha256(var.s3_code_key))
-
   # Environment variables for the Lambda function
   environment {
     variables = {
