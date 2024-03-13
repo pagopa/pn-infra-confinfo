@@ -10,7 +10,9 @@ resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
   handler       = var.handler
   runtime       = var.runtime
   memory_size   = var.memory_size
+  timeout       = var.timeout
   role          = aws_iam_role.lambda_role.arn
+  tags          = var.lambda_tags
 
   # Dynamically calculates source code hash based on if the code is uploaded as a file or from S3
   source_code_hash = (var.filename != null ? filebase64sha256(var.filename) : sha256(var.s3_code_key))

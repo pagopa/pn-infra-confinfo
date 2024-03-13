@@ -28,6 +28,12 @@ variable "memory_size" {
   description = "The memory of the lambda."
 }
 
+variable "timeout" {
+  type        = number
+  default     = 3
+  description = "The timeout of the lambda."
+}
+
 variable "aws_region" {
   type        = string
   description = "AWS region to create resources"
@@ -53,4 +59,10 @@ variable "runtime" {
 variable "safestorage_bucket" {
   description = "Safestorage bucket"
   type        = string
+}
+
+variable "lambda_tags" {
+  type        = map(string)
+  default     = {}
+  description = "Tags for Lambda resource"
 }
