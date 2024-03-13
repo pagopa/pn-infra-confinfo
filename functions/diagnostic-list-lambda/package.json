@@ -8,7 +8,7 @@
     "license": "ISC",
     "scripts": {
         "test-build": "npm run-script build",
-        "build": "npm prune --production && rm -f ./function.zip && zip -r ./function.zip . -x './src/test/*' -x '*.md' -x '*.env'  -x '*.gitignore'"
+        "build": "npm prune --production && rm -f ./*.zip && zip -r ./function.zip . -x './src/test/*' -x '*.md' -x '*.env'  -x '*.gitignore' -x '*.zip' -x '.current_build'"
     },
     "dependencies": {
         "@aws-sdk/client-resource-groups-tagging-api": "^3.521.0",
