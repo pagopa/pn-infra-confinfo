@@ -1,7 +1,7 @@
 {
-    "name": "diagnostic-get-file",
+    "name": "diagnostic-list-lambda",
     "version": "1.0.0",
-    "description": "Data proxy for pn-core lambdas.",
+    "description": "List all the diagnostic lambda in the account.",
     "main": "index.js",
     "type": "module",
     "author": "Giacomo Vallorani",
@@ -11,9 +11,8 @@
         "build": "npm prune --production && rm -f ./*.zip && zip -r ./function.zip . -x './src/test/*' -x '*.md' -x '*.env'  -x '*.gitignore' -x '*.zip' -x '.current_build'"
     },
     "dependencies": {
-        "@aws-sdk/client-dynamodb": "^3.506.0",
-        "@aws-sdk/client-s3": "^3.504.0",
-        "@aws-sdk/lib-dynamodb": "^3.506.0",
-        "@aws-sdk/s3-request-presigner": "^3.504.0"
+        "@aws-sdk/client-resource-groups-tagging-api": "^3.521.0",
+        "@aws-sdk/client-lambda": "^3.490.0",
+        "@aws-sdk/client-sts": "^3.490.0"
     }
 }

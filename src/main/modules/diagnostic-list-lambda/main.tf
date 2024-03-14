@@ -1,8 +1,5 @@
-locals {
-  dynamoTables = ["pn-EcRichiesteMetadati"]
-}
 # Lambda function resource definition
-resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
+resource "aws_lambda_function" "diagnostic_list_lambda" {
   function_name = var.function_name
   filename      = var.filename != null ? var.filename : null
   s3_bucket     = var.filename == null ? var.s3_code_bucket : null
@@ -17,9 +14,11 @@ resource "aws_lambda_function" "diagnostic_data_proxy_lambda" {
   # Environment variables for the Lambda function
   environment {
     variables = {
-      SAFESTORAGE_BUCKET = var.safestorage_bucket
-      DYNAMO_AWS_REGION  = var.aws_region
-      S3_AWS_REGION      = var.aws_region
+      CURRENT_REGION           = var.aws_region
+      CURRENT_ACCOUNT          = var.current_aws_account_name
+      CONFINFO_LAMBDA_NAME     = var.confinfo_lambda_name
+      CONFINFO_LAMBDA_REGION   = var.aws_region
+      CONFINFO_ASSUME_ROLE_ARN = var.confinfo_asuume_role_arn
     }
   }
 
@@ -60,7 +59,7 @@ resource "aws_iam_role_policy" "lambda_logs_policy" {
       {
         Effect   = "Allow",
         Action   = "logs:CreateLogGroup",
-        Resource = "arn:aws:logs:${var.aws_region}:${var.pn_confinfo_aws_account_id}:*"
+        Resource = "arn:aws:logs:${var.aws_region}:${var.current_aws_account_id}:*"
       },
       {
         Effect = "Allow",
@@ -69,69 +68,41 @@ resource "aws_iam_role_policy" "lambda_logs_policy" {
           "logs:PutLogEvents"
         ],
         Resource = [
-          "arn:aws:logs:${var.aws_region}:${var.pn_confinfo_aws_account_id}:log-group:/aws/lambda/${var.function_name}:*"
+          "arn:aws:logs:${var.aws_region}:${var.current_aws_account_id}:log-group:/aws/lambda/${var.function_name}:*"
         ]
       }
     ],
   })
 }
 
-# IAM policy for accessing DynamoDB
-resource "aws_iam_role_policy" "lambda_dynamo_policy" {
-  name = "${var.function_name}-DynamoPolicy"
+# IAM policy attached to the role for getting all resources based on tag
+resource "aws_iam_role_policy" "lambda_tags_policy" {
+  name = "${var.function_name}-TagsPolicy"
   role = aws_iam_role.lambda_role.id
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow",
-        Action = [
-          "dynamodb:GetItem",
-          "dynamodb:Query"
-        ]
-        Resource = [
-          for table in local.dynamoTables :
-          "arn:aws:dynamodb:${var.aws_region}:${var.pn_confinfo_aws_account_id}:table/${table}"
-        ]
-      },
-      {
-        Effect = "Allow",
-        Action = "kms:Decrypt",
-        Resource = [
-          "arn:aws:kms:${var.aws_region}:${var.pn_confinfo_aws_account_id}:key/*"
-        ]
+        Effect   = "Allow",
+        Action   = "tag:GetResources",
+        Resource = "*"
       }
     ],
   })
 }
 
-# IAM policy for accessing S3
-resource "aws_iam_role_policy" "lambda_s3_policy" {
-  name = "${var.function_name}-S3Policy"
-  role = aws_iam_role.lambda_role.id
+resource "aws_iam_role_policy" "lambda_invoke_function_policy" {
+  # Make resource only if is running on core
+  count = var.current_aws_account_name == "core" ? 1 : 0
+  name  = "${var.function_name}-InvokePolicy"
+  role  = aws_iam_role.lambda_role.id
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow",
-        Action = [
-          "s3:GetObject",
-          "s3:GetObjectTagging",
-          "s3:GetObjectRetention",
-          "s3:ListBucket",
-          "s3:RestoreObject"
-        ]
-        Resource = [
-          "arn:aws:s3:::${var.safestorage_bucket}",
-          "arn:aws:s3:::${var.safestorage_bucket}/*"
-        ]
-      },
-      {
-        Effect = "Allow",
-        Action = "kms:Decrypt",
-        Resource = [
-          "arn:aws:kms:${var.aws_region}:${var.pn_confinfo_aws_account_id}:key/*"
-        ]
+        Effect   = "Allow",
+        Action   = "sts:AssumeRole",
+        Resource = var.confinfo_asuume_role_arn
       }
     ],
   })

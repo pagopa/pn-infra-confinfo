@@ -1,6 +1,6 @@
 variable "function_name" {
   type        = string
-  default     = "diagnostic-data-proxy"
+  default     = "diagnostic-list-lambda"
   description = "The name of the Lambda."
 }
 
@@ -39,11 +39,6 @@ variable "aws_region" {
   description = "AWS region to create resources"
 }
 
-variable "pn_confinfo_aws_account_id" {
-  type        = string
-  description = "AWS pn-confinfo account id"
-}
-
 variable "handler" {
   description = "Handler Lambda"
   type        = string
@@ -56,9 +51,30 @@ variable "runtime" {
   default     = "nodejs18.x"
 }
 
-variable "safestorage_bucket" {
-  description = "Safestorage bucket"
+variable "current_aws_account_id" {
   type        = string
+  description = "Current AWS account id."
+}
+
+variable "current_aws_account_name" {
+  type        = string
+  description = "Current AWS account name."
+  validation {
+    condition     = contains(["core", "confinfo"], var.current_aws_account_name)
+    error_message = "The current_aws_account_name must be either 'core' or 'confinfo'."
+  }
+}
+
+variable "confinfo_lambda_name" {
+  type        = string
+  default     = "none"
+  description = "The lambda to invoke."
+}
+
+variable "confinfo_asuume_role_arn" {
+  type        = string
+  default     = "none"
+  description = "Role to assume in confinfo."
 }
 
 variable "lambda_tags" {
