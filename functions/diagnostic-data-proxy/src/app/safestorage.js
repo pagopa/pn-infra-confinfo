@@ -153,7 +153,6 @@ export const getObject = async (fileKey) => {
     ) {
       if (!headResponse.Restore) {
         // Initiate restore if not yet started.
-        // await restoreObject(bucket, key);
         return {
           fileKey,
           state: headResponse.StorageClass, //'RESTORING',
