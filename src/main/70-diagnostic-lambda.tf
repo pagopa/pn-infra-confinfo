@@ -5,7 +5,8 @@ locals {
 
   diagnostic_role_callers = [
     "diagnostic-tools-ExecutionRole",
-    "diagnostic-list-lambda-ExecutionRole"
+    "diagnostic-list-lambda-ExecutionRole",
+    "diagnostic-ss-get-object-ExecutionRole"
   ]
   diagnostic_role_callers_account_id = var.pn_core_aws_account_id
   diagnostic_role_prefix             = "Diagnostic"
