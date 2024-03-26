@@ -1,6 +1,13 @@
-import { getObject, headObject } from './safestorage.js';
+import { getObject, headObject, restoreObject } from './safestorage.js';
 import { getEvents } from './ecRichiesteMetadati.js';
-import { checkKeys, makeResponse } from './utils.js';
+import {
+  checkKeys,
+  makeResponse,
+  makeErrorResponse,
+  createCustomError,
+} from './utils.js';
+
+const InvalidActionError = createCustomError('InvalidActionError', 501);
 
 /**
  * Handles an event by executing different actions based on the event's details.
@@ -14,32 +21,29 @@ import { checkKeys, makeResponse } from './utils.js';
 export const handleEvent = async (event) => {
   try {
     checkKeys(event, [['action', 'string']]);
-  } catch (e) {
-    return makeResponse(400, `Invalid request: ${e.message}`);
-  }
-
-  switch (event.action) {
-    case 'GET_OBJECT':
-    case 'HEAD_OBJECT':
-      try {
-        const { fileKey } = checkKeys(event, [['fileKey', 'string']]);
-        let res =
-          event.action === 'HEAD_OBJECT'
-            ? await headObject(fileKey)
-            : await getObject(fileKey);
-        return makeResponse(res.found ? 200 : 404, res);
-      } catch (e) {
-        return makeResponse(400, e.message);
+    switch (event.action) {
+      case 'RESTORE_OBJECT': {
+        const { fileKey } = checkKeys(event, [['fileKey', 'string']])
+        return makeResponse(200, await restoreObject(fileKey));
       }
-    case 'GET_EC_RICHIESTE_METADATI':
-      try {
+      case 'GET_OBJECT': {
+        const { fileKey } = checkKeys(event, [['fileKey', 'string']])
+        return makeResponse(200, await getObject(fileKey));
+      }
+      case 'HEAD_OBJECT': {
+        const { fileKey } = checkKeys(event, [['fileKey', 'string']])
+        let res = await headObject(fileKey);
+        return makeResponse(res.found ? 200 : 404, res);
+      }
+      case 'GET_EC_RICHIESTE_METADATI': {
         const { requestId } = checkKeys(event, [['requestId', 'string']]);
         const { checkRetry = false } = event;
         let res = await getEvents(requestId, checkRetry);
         return makeResponse(200, res);
-      } catch (e) {
-        return makeResponse(400, e.message);
       }
+    }
+    throw new InvalidActionError();
+  } catch (e) {
+    return makeErrorResponse(e);
   }
-  return makeResponse(501, `Invalid action!`);
 };

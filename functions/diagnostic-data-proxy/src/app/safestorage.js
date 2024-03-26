@@ -7,11 +7,24 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { getSafeStorageBucket, getS3AWSRegion, getUrlExpiresSeconds } from './config.js';
+import {
+  getSafeStorageBucket,
+  getS3AWSRegion,
+  getUrlExpiresSeconds,
+  getGlacierRestoreDays,
+  getGlacierRestoreTier,
+} from './config.js';
 
 const DEFAULT_EXPIRATION_SECONDS = 60 * 5; // 5 minutes default
+const DEFAULT_GLACIER_RESTORE_DAYS = 5;
+const DEFAULT_GLACIER_RESTORE_TIER = 'Standard'; // Valid values: 'Standard', 'Bulk', 'Expedited'
 
-const urlExpiresInSeconds = getUrlExpiresSeconds() ?? DEFAULT_EXPIRATION_SECONDS;
+const urlExpiresInSeconds =
+  getUrlExpiresSeconds() ?? DEFAULT_EXPIRATION_SECONDS;
+const glacierRestoreDays =
+  getGlacierRestoreDays() ?? DEFAULT_GLACIER_RESTORE_DAYS;
+const glacierRestoreTier =
+  getGlacierRestoreTier() ?? DEFAULT_GLACIER_RESTORE_TIER;
 
 const client = new S3Client({ region: getS3AWSRegion() });
 const bucket = getSafeStorageBucket();
@@ -19,23 +32,24 @@ const bucket = getSafeStorageBucket();
 /**
  * Initiates the restoration of an object from S3 Glacier storage.
  *
- * @param {string} bucket - The name of the S3 bucket containing the object.
  * @param {string} key - The key of the object to restore.
  */
-const restoreObject = async (bucket, key) => {
+export const restoreObject = async (fileKey) => {
+  const key = fileKey.replace('safestorage://', '');
   const input = {
     Bucket: bucket,
     Key: key,
     RestoreRequest: {
-      Days: 5,
+      Days: glacierRestoreDays,
       GlacierJobParameters: {
-        Tier: 'Standard',
+        Tier: glacierRestoreTier,
       },
     },
   };
   const restoreObjectCommand = new RestoreObjectCommand(input);
   try {
-    await client.send(restoreObjectCommand);
+    const res = await client.send(restoreObjectCommand);
+    console.log(res);
     console.log('Restore initiated for:', key);
   } catch (err) {
     console.error('Error during object restore:', err);
@@ -139,17 +153,17 @@ export const getObject = async (fileKey) => {
     ) {
       if (!headResponse.Restore) {
         // Initiate restore if not yet started.
-        await restoreObject(bucket, key);
         return {
           fileKey,
-          state: 'RESTORING',
-          message: "Object restore initiated. Please try again later.",
+          state: headResponse.StorageClass, //'RESTORING',
+          message: `Object is in ${headResponse.StorageClass} state.`,
         };
       } else if (headResponse.Restore.includes('ongoing-request="true"')) {
         return {
           fileKey,
           state: 'RESTORING',
-          message: "Object restore already in progress. Please try again later.",
+          message:
+            'Object restore already in progress. Please try again later.',
         };
       }
     }
