@@ -50,3 +50,22 @@ vpc_pn_spid_hub_internal_subnets_names = []
 
 
 
+
+
+
+vpc_pn_pdfraster_name = "PN PdfRaster"
+vpc_pn_pdfraster_primary_cidr = "10.15.0.0/16"
+vpc_pn_pdfraster_aws_services_interface_endpoints_subnets_cidr = ["10.15.50.0/24","10.15.51.0/24","10.15.52.0/24"]
+vpc_endpoints_pn_pdfraster = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","xray"]
+
+vpc_pn_pdfraster_private_subnets_cidr = []
+vpc_pn_pdfraster_private_subnets_names = []
+vpc_pn_pdfraster_public_subnets_cidr = ["10.15.1.0/28","10.15.1.16/28","10.15.1.32/28"]
+vpc_pn_pdfraster_public_subnets_names = ["PN PdfRaster - Public Subnet (dev) AZ 0","PN PdfRaster - Public Subnet (dev) AZ 1","PN PdfRaster - Public Subnet (dev) AZ 2"]
+vpc_pn_pdfraster_internal_subnets_cidr = ["10.15.3.0/28","10.15.3.16/28","10.15.3.32/28","10.15.30.0/24","10.15.31.0/24","10.15.32.0/24","10.15.50.0/24","10.15.51.0/24","10.15.52.0/24"]
+vpc_pn_pdfraster_internal_subnets_names = ["PN PdfRaster - PdfRaster Ingress Subnet (dev) AZ 0","PN PdfRaster - PdfRaster Ingress Subnet (dev) AZ 1","PN PdfRaster - PdfRaster Ingress Subnet (dev) AZ 2","PN PdfRaster - PdfRaster Private Subnet (dev) AZ 0","PN PdfRaster - PdfRaster Private Subnet (dev) AZ 1","PN PdfRaster - PdfRaster Private Subnet (dev) AZ 2","PN PdfRaster - AWS Services Subnet (dev) AZ 0","PN PdfRaster - AWS Services Subnet (dev) AZ 1","PN PdfRaster - AWS Services Subnet (dev) AZ 2"]
+
+vpc_pn_pdfraster_pdfin_subnets_cidrs = ["10.15.3.0/28","10.15.3.16/28","10.15.3.32/28"]
+vpc_pn_pdfraster_pdfnet_subnets_cidrs = ["10.15.30.0/24","10.15.31.0/24","10.15.32.0/24"]
+
+
