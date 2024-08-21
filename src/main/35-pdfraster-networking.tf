@@ -106,3 +106,45 @@ module "vpc_endpoints_pn_pdfraster" {
     }
   )
 }
+
+
+resource "aws_security_group" "vpc_pn_confinfo__secgrp_topdfraster" {
+  
+  name_prefix = "pn-confinfo_vpc-topdfraster-secgrp"
+  description = "Allow HTTP_8080 inbound traffic"
+  vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  ingress {
+    description = "8080 from VPC"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
+  }
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+# PRIVATE LINK ENDPOINTS TO PdfRaster
+resource "aws_vpc_endpoint" "to_pdfraster" {
+  vpc_id            = module.vpc_pn_confinfo.vpc_id
+  service_name      = aws_vpc_endpoint_service.pn_pdfraster_in_endpoint_svc.service_name
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [ aws_security_group.vpc_pn_confinfo__secgrp_topdfraster.id ]
+
+  subnet_ids          = local.Confinfo_ToPdfRaster_SubnetsIds
+  private_dns_enabled = false
+
+  tags                = { 
+    Name = "Endpoint to pn-pdfraster"
+    "pn-eni-related" = "true"
+    "pn-eni-related-groupName-regexp" = base64encode("^pn-confinfo_vpc-topdfraster-.*$")
+  }
+}

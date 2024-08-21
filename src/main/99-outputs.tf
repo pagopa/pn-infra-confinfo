@@ -190,8 +190,8 @@ output "ConfInfo_PdfRasterApplicationLoadBalancerMetricsDimensionName" {
 }
 
 
-output "ConfInfo_ApplicationLoadBalancerAwsDns" {
-  value = aws_lb.pn_confinfo_ecs_alb.dns_name 
+output "ConfInfo_PdfRasterApplicationLoadBalancerAwsDns" {
+  value = aws_lb.pn_pdfraster_ecs_alb.dns_name 
   description = "ECS cluster Application Load Balancer AWS released DNS, can be used to call microservices"
 }
 

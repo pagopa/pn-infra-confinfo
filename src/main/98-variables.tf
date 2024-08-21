@@ -143,6 +143,10 @@ variable "pn_confinfo_to_postel_vpcse" {
   description = "Postel VPC Service endpoint exposing 'consolidatore' services"
 }
 
+variable "vpc_pn_confinfo_to_pdfraster_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of PdfRaster interconnection subnets in VPC pn-confinfo"
+}
 
 
 

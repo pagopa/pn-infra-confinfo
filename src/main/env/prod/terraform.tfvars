@@ -23,14 +23,15 @@ vpc_pn_confinfo_private_subnets_cidr = ["10.11.10.0/24","10.11.11.0/24","10.11.1
 vpc_pn_confinfo_private_subnets_names = ["PN ConfInfo - ConfInfo Egress Subnet (prod) AZ 0","PN ConfInfo - ConfInfo Egress Subnet (prod) AZ 1","PN ConfInfo - ConfInfo Egress Subnet (prod) AZ 2"]
 vpc_pn_confinfo_public_subnets_cidr = ["10.11.1.0/28","10.11.1.16/28","10.11.1.32/28"]
 vpc_pn_confinfo_public_subnets_names = ["PN ConfInfo - Public Subnet (prod) AZ 0","PN ConfInfo - Public Subnet (prod) AZ 1","PN ConfInfo - Public Subnet (prod) AZ 2"]
-vpc_pn_confinfo_internal_subnets_cidr = ["10.11.2.0/28","10.11.2.16/28","10.11.2.32/28","10.11.3.0/28","10.11.3.16/28","10.11.3.32/28","10.11.30.0/24","10.11.31.0/24","10.11.32.0/24","10.11.40.0/24","10.11.41.0/24","10.11.42.0/24","10.11.50.0/24","10.11.51.0/24","10.11.52.0/24"]
-vpc_pn_confinfo_internal_subnets_names = ["PN ConfInfo - DataVault Ingress Subnet (prod) AZ 0","PN ConfInfo - DataVault Ingress Subnet (prod) AZ 1","PN ConfInfo - DataVault Ingress Subnet (prod) AZ 2","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (prod) AZ 0","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (prod) AZ 1","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (prod) AZ 2","PN ConfInfo - ConfInfo Subnet (prod) AZ 0","PN ConfInfo - ConfInfo Subnet (prod) AZ 1","PN ConfInfo - ConfInfo Subnet (prod) AZ 2","PN ConfInfo - PostelGW DMZ Subnet (prod) AZ 0","PN ConfInfo - PostelGW DMZ Subnet (prod) AZ 1","PN ConfInfo - PostelGW DMZ Subnet (prod) AZ 2","PN ConfInfo - AWS Services Subnet (prod) AZ 0","PN ConfInfo - AWS Services Subnet (prod) AZ 1","PN ConfInfo - AWS Services Subnet (prod) AZ 2"]
+vpc_pn_confinfo_internal_subnets_cidr = ["10.11.2.0/28","10.11.2.16/28","10.11.2.32/28","10.11.3.0/28","10.11.3.16/28","10.11.3.32/28","10.11.30.0/24","10.11.31.0/24","10.11.32.0/24","10.11.40.0/24","10.11.41.0/24","10.11.42.0/24","10.11.50.0/24","10.11.51.0/24","10.11.52.0/24","10.11.60.0/24","10.11.61.0/24","10.11.62.0/24"]
+vpc_pn_confinfo_internal_subnets_names = ["PN ConfInfo - DataVault Ingress Subnet (prod) AZ 0","PN ConfInfo - DataVault Ingress Subnet (prod) AZ 1","PN ConfInfo - DataVault Ingress Subnet (prod) AZ 2","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (prod) AZ 0","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (prod) AZ 1","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (prod) AZ 2","PN ConfInfo - ConfInfo Subnet (prod) AZ 0","PN ConfInfo - ConfInfo Subnet (prod) AZ 1","PN ConfInfo - ConfInfo Subnet (prod) AZ 2","PN ConfInfo - PostelGW DMZ Subnet (prod) AZ 0","PN ConfInfo - PostelGW DMZ Subnet (prod) AZ 1","PN ConfInfo - PostelGW DMZ Subnet (prod) AZ 2","PN ConfInfo - AWS Services Subnet (prod) AZ 0","PN ConfInfo - AWS Services Subnet (prod) AZ 1","PN ConfInfo - AWS Services Subnet (prod) AZ 2","PN ConfInfo - To Pdf Raster Subnet (prod) AZ 0","PN ConfInfo - To Pdf Raster Subnet (prod) AZ 1","PN ConfInfo - To Pdf Raster Subnet (prod) AZ 2"]
 
 vpc_pn_confinfo_dvin_subnets_cidrs = ["10.11.2.0/28","10.11.2.16/28","10.11.2.32/28"]
 vpc_pn_confinfo_ecssin_subnets_cidrs = ["10.11.3.0/28","10.11.3.16/28","10.11.3.32/28"]
 vpc_pn_confinfo_confinfo_egres_subnets_cidrs = ["10.11.10.0/24","10.11.11.0/24","10.11.12.0/24"]
 vpc_pn_confinfo_confinfo_subnets_cidrs = ["10.11.30.0/24","10.11.31.0/24","10.11.32.0/24"]
 vpc_pn_confinfo_postel_subnets_cidrs = ["10.11.40.0/24","10.11.41.0/24","10.11.42.0/24"]
+vpc_pn_confinfo_to_pdfraster_subnets_cidrs = ["10.11.60.0/24","10.11.61.0/24","10.11.62.0/24"]
 
 
 

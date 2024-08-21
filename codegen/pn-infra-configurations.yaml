@@ -213,6 +213,13 @@ accounts:
             first_net_ip: 10.<vpc_idx>.50.0
             net_size: 256
 
+          - code: to_pdfraster
+            name: To Pdf Raster
+            gateway: null
+            first_net_ip: 10.<vpc_idx>.60.0
+            net_size: 256
+            export_cidrs: true
+
       - code: pn-spid-hub
         name: PN SpidHub
         primary_cidr: 10.<vpc_idx>.0.0/16
