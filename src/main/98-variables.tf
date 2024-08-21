@@ -231,15 +231,6 @@ variable "vpc_pn_pdfraster_primary_cidr" {
   description = "Primary CIDR of the PN PdfRaster VPC"
 }
 
-variable "vpc_pn_pdfraster_pdfnet_subnets_cidr" {
-  type        = list(string)
-  description = "Private subnets list of cidr."
-}
-variable "vpc_pn_pdfraster_pdfnet_subnets_names" {
-  type        = list(string)
-  description = "Private subnets list of names."
-}
-
 variable "vpc_pn_pdfraster_private_subnets_cidr" {
   type        = list(string)
   description = "Private subnets list of cidr."

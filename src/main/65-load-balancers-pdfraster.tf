@@ -26,7 +26,7 @@ resource "aws_security_group" "vpc_pn_pdfraster__secgrp_webapp" {
 
 # - ECS cluster Application load balancer 
 resource "aws_lb" "pn_pdfraster_ecs_alb" {
-  name_prefix        = "EcsPdf-"
+  name_prefix        = "EcsPf-"
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.vpc_pn_pdfraster__secgrp_webapp.id]
