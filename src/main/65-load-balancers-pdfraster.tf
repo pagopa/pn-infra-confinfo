@@ -79,7 +79,7 @@ resource "aws_lb" "pn_pdfraster_in_nlb" {
   tags = {
     "Name": "PN PdfRaster - Ingress - NLB",
     "pn-eni-related": "true",
-    "pn-eni-related-description-regexp": base64encode("^ELB net/DvI-.*$")
+    "pn-eni-related-description-regexp": base64encode("^ELB net/PdfI-.*$")
   }
 }
 # - ServiceEndpoint ingresso per le invocazioni a pn-pdfraster
@@ -103,9 +103,9 @@ resource "aws_lb_listener" "pn_pdfraster_in_nlb_http_to_alb_http" {
     target_group_arn = aws_lb_target_group.pn_pdfraster_in_nlb_http_to_alb_http.arn
   }
 }
-# - DataVault NLB target group for HTTP
+# - PdfRaster NLB target group for HTTP
 resource "aws_lb_target_group" "pn_pdfraster_in_nlb_http_to_alb_http" {
-  name_prefix = "DvI-"
+  name_prefix = "PdfI-"
   vpc_id      = module.vpc_pn_pdfraster.vpc_id
 
   port        = 8080

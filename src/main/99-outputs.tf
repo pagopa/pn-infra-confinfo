@@ -217,7 +217,7 @@ output "ConfInfo_PdfRasterWebappSecurityGroupArn" {
 }
 
 
-output "ConfInfo_ServiceEndpoint_ToPdfRaster" {
+output "ConfInfo_ServiceEndpointToPdfRaster" {
   value = aws_vpc_endpoint_service.pn_pdfraster_in_endpoint_svc.service_name
   description = "Service endpoint for PdfRaster connections"
 }
