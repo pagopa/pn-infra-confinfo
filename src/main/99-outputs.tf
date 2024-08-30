@@ -218,6 +218,6 @@ output "ConfInfo_PdfRasterWebappSecurityGroupArn" {
 
 
 output "ConfInfo_ServiceEndpointToPdfRaster" {
-  value = aws_vpc_endpoint_service.pn_pdfraster_in_endpoint_svc.service_name
+  value = aws_vpc_endpoint.to_pdfraster.dns_entry[0].dns_name
   description = "Service endpoint for PdfRaster connections"
 }
