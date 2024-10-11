@@ -143,6 +143,10 @@ variable "pn_confinfo_to_postel_vpcse" {
   description = "Postel VPC Service endpoint exposing 'consolidatore' services"
 }
 
+variable "vpc_pn_confinfo_to_pdfraster_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of PdfRaster interconnection subnets in VPC pn-confinfo"
+}
 
 
 
@@ -206,3 +210,68 @@ variable "pn_cost_anomaly_detection_threshold" {
   type        = string
   description = "pn-core cost anomaly detection threshold (percentage)"
 }
+
+
+## pdfraster variables
+
+
+variable "vpc_pn_pdfraster_aws_services_interface_endpoints_subnets_cidr" {
+  type        = list(string)
+  description = "AWS services interfaces endpoints list of cidr."
+}
+
+
+variable "vpc_pn_pdfraster_name" {
+  type        = string
+  description = "Name of the PN PdfRaster VPC"
+}
+
+variable "vpc_pn_pdfraster_primary_cidr" {
+  type        = string
+  description = "Primary CIDR of the PN PdfRaster VPC"
+}
+
+variable "vpc_pn_pdfraster_private_subnets_cidr" {
+  type        = list(string)
+  description = "Private subnets list of cidr."
+}
+variable "vpc_pn_pdfraster_private_subnets_names" {
+  type        = list(string)
+  description = "Private subnets list of names."
+}
+
+variable "vpc_pn_pdfraster_public_subnets_cidr" {
+  type        = list(string)
+  description = "Private subnets list of cidr."
+}
+variable "vpc_pn_pdfraster_public_subnets_names" {
+  type        = list(string)
+  description = "Private subnets list of names."
+}
+
+variable "vpc_pn_pdfraster_internal_subnets_cidr" {
+  type        = list(string)
+  description = "Internal subnets list of cidr"
+}
+variable "vpc_pn_pdfraster_internal_subnets_names" {
+  type        = list(string)
+  description = "Internal subnets list of names"
+}
+
+
+
+variable "vpc_endpoints_pn_pdfraster" {
+  type        = list(string)
+  description = "Endpoint List"
+}
+
+variable "vpc_pn_pdfraster_pdfnet_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of subnets in VPC pn-pdfraster"
+}
+
+variable "vpc_pn_pdfraster_pdfin_subnets_cidrs" {
+  type        = list(string)
+  description = "Cidr list of Ingress subnets in VPC pn-pdfraster"
+}
+

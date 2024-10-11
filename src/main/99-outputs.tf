@@ -153,3 +153,71 @@ output "SpidHub_HelpdeskAccountId" {
   description = "Account id where helpdesk functionality are deployed"
 }
 
+
+
+## pdf raster output
+output "ConfInfo_PdfRasterVpcId" {
+  value = module.vpc_pn_pdfraster.vpc_id
+  description = "Id della VPC contenete il microservizio PdfRaster "
+}
+
+output "ConfInfo_PdfRasterVpcCidr" {
+  value = var.vpc_pn_pdfraster_primary_cidr
+  description = "CIDR della VPC contenete il microservizio PdfRaster"
+}
+
+output "ConfInfo_PdfRasterDefaultSecurityGroup" {
+  value = module.vpc_pn_pdfraster.default_security_group_id
+  description = "Default PdfRaster VPC security group"
+}
+
+output "ConfInfo_PdfRasterVpcSubnets" {
+   value = local.PdfRaster_SubnetsIds
+}
+
+output "ConfInfo_PdfRasterVpcSubnetsCidrs" {
+  value = local.PdfRaster_SubnetsCidrs
+}
+
+output "ConfInfo_PdfRasterApplicationLoadBalancerArn" {
+  value = aws_lb.pn_pdfraster_ecs_alb.arn
+  description = "ECS cluster Application Load Balancer ARN, attach microservice listeners here"
+}
+
+output "ConfInfo_PdfRasterApplicationLoadBalancerMetricsDimensionName" {
+  value = replace( aws_lb.pn_pdfraster_ecs_alb.arn, "/.*:[0-9]{12}:loadbalancer.app.(.*)/", "app/$1")
+  description = "ECS cluster Application Load Balancer name used for metrics"
+}
+
+
+output "ConfInfo_PdfRasterApplicationLoadBalancerAwsDns" {
+  value = aws_lb.pn_pdfraster_ecs_alb.dns_name 
+  description = "ECS cluster Application Load Balancer AWS released DNS, can be used to call microservices"
+}
+
+output "ConfInfo_PdfRasterApplicationLoadBalancerAwsDnsZoneId" {
+  value = aws_lb.pn_pdfraster_ecs_alb.zone_id 
+  description = "ECS cluster Application Load Balancer AWS hosted Zone, usefull for aliases"
+}
+
+output "ConfInfo_PdfRasterApplicationLoadBalancerListenerArn" {
+  value = aws_lb_listener.pn_pdfraster_ecs_alb_8080.arn
+  description = "ECS cluster Application Load Balancer Listener ARN, attach here new microservice routing rule"
+}
+
+
+output "ConfInfo_PdfRasterWebappSecurityGroupId" {
+  value = aws_security_group.vpc_pn_pdfraster__secgrp_webapp.id
+  description = "WebApp security group id"
+}
+
+output "ConfInfo_PdfRasterWebappSecurityGroupArn" {
+  value = aws_security_group.vpc_pn_pdfraster__secgrp_webapp.arn
+  description = "WebApp security group ARN"
+}
+
+
+output "ConfInfo_ServiceEndpointToPdfRaster" {
+  value = aws_vpc_endpoint.to_pdfraster.dns_entry[0].dns_name
+  description = "Service endpoint for PdfRaster connections"
+}

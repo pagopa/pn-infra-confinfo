@@ -23,14 +23,15 @@ vpc_pn_confinfo_private_subnets_cidr = ["10.2.10.0/24","10.2.11.0/24","10.2.12.0
 vpc_pn_confinfo_private_subnets_names = ["PN ConfInfo - ConfInfo Egress Subnet (dev) AZ 0","PN ConfInfo - ConfInfo Egress Subnet (dev) AZ 1","PN ConfInfo - ConfInfo Egress Subnet (dev) AZ 2"]
 vpc_pn_confinfo_public_subnets_cidr = ["10.2.1.0/28","10.2.1.16/28","10.2.1.32/28"]
 vpc_pn_confinfo_public_subnets_names = ["PN ConfInfo - Public Subnet (dev) AZ 0","PN ConfInfo - Public Subnet (dev) AZ 1","PN ConfInfo - Public Subnet (dev) AZ 2"]
-vpc_pn_confinfo_internal_subnets_cidr = ["10.2.2.0/28","10.2.2.16/28","10.2.2.32/28","10.2.3.0/28","10.2.3.16/28","10.2.3.32/28","10.2.30.0/24","10.2.31.0/24","10.2.32.0/24","10.2.40.0/24","10.2.41.0/24","10.2.42.0/24","10.2.50.0/24","10.2.51.0/24","10.2.52.0/24"]
-vpc_pn_confinfo_internal_subnets_names = ["PN ConfInfo - DataVault Ingress Subnet (dev) AZ 0","PN ConfInfo - DataVault Ingress Subnet (dev) AZ 1","PN ConfInfo - DataVault Ingress Subnet (dev) AZ 2","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (dev) AZ 0","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (dev) AZ 1","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (dev) AZ 2","PN ConfInfo - ConfInfo Subnet (dev) AZ 0","PN ConfInfo - ConfInfo Subnet (dev) AZ 1","PN ConfInfo - ConfInfo Subnet (dev) AZ 2","PN ConfInfo - PostelGW DMZ Subnet (dev) AZ 0","PN ConfInfo - PostelGW DMZ Subnet (dev) AZ 1","PN ConfInfo - PostelGW DMZ Subnet (dev) AZ 2","PN ConfInfo - AWS Services Subnet (dev) AZ 0","PN ConfInfo - AWS Services Subnet (dev) AZ 1","PN ConfInfo - AWS Services Subnet (dev) AZ 2"]
+vpc_pn_confinfo_internal_subnets_cidr = ["10.2.2.0/28","10.2.2.16/28","10.2.2.32/28","10.2.3.0/28","10.2.3.16/28","10.2.3.32/28","10.2.30.0/24","10.2.31.0/24","10.2.32.0/24","10.2.40.0/24","10.2.41.0/24","10.2.42.0/24","10.2.50.0/24","10.2.51.0/24","10.2.52.0/24","10.2.60.0/24","10.2.61.0/24","10.2.62.0/24"]
+vpc_pn_confinfo_internal_subnets_names = ["PN ConfInfo - DataVault Ingress Subnet (dev) AZ 0","PN ConfInfo - DataVault Ingress Subnet (dev) AZ 1","PN ConfInfo - DataVault Ingress Subnet (dev) AZ 2","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (dev) AZ 0","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (dev) AZ 1","PN ConfInfo - ExternalChannels SafeStorage Ingress Subnet (dev) AZ 2","PN ConfInfo - ConfInfo Subnet (dev) AZ 0","PN ConfInfo - ConfInfo Subnet (dev) AZ 1","PN ConfInfo - ConfInfo Subnet (dev) AZ 2","PN ConfInfo - PostelGW DMZ Subnet (dev) AZ 0","PN ConfInfo - PostelGW DMZ Subnet (dev) AZ 1","PN ConfInfo - PostelGW DMZ Subnet (dev) AZ 2","PN ConfInfo - AWS Services Subnet (dev) AZ 0","PN ConfInfo - AWS Services Subnet (dev) AZ 1","PN ConfInfo - AWS Services Subnet (dev) AZ 2","PN ConfInfo - To Pdf Raster Subnet (dev) AZ 0","PN ConfInfo - To Pdf Raster Subnet (dev) AZ 1","PN ConfInfo - To Pdf Raster Subnet (dev) AZ 2"]
 
 vpc_pn_confinfo_dvin_subnets_cidrs = ["10.2.2.0/28","10.2.2.16/28","10.2.2.32/28"]
 vpc_pn_confinfo_ecssin_subnets_cidrs = ["10.2.3.0/28","10.2.3.16/28","10.2.3.32/28"]
 vpc_pn_confinfo_confinfo_egres_subnets_cidrs = ["10.2.10.0/24","10.2.11.0/24","10.2.12.0/24"]
 vpc_pn_confinfo_confinfo_subnets_cidrs = ["10.2.30.0/24","10.2.31.0/24","10.2.32.0/24"]
 vpc_pn_confinfo_postel_subnets_cidrs = ["10.2.40.0/24","10.2.41.0/24","10.2.42.0/24"]
+vpc_pn_confinfo_to_pdfraster_subnets_cidrs = ["10.2.60.0/24","10.2.61.0/24","10.2.62.0/24"]
 
 
 
@@ -48,5 +49,24 @@ vpc_pn_spid_hub_public_subnets_names = ["PN SpidHub - Public Subnet (dev) AZ 0",
 vpc_pn_spid_hub_internal_subnets_cidr = []
 vpc_pn_spid_hub_internal_subnets_names = []
 
+
+
+
+
+
+vpc_pn_pdfraster_name = "PN PdfRaster"
+vpc_pn_pdfraster_primary_cidr = "10.15.0.0/16"
+vpc_pn_pdfraster_aws_services_interface_endpoints_subnets_cidr = ["10.15.50.0/24","10.15.51.0/24","10.15.52.0/24"]
+vpc_endpoints_pn_pdfraster = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","xray"]
+
+vpc_pn_pdfraster_private_subnets_cidr = []
+vpc_pn_pdfraster_private_subnets_names = []
+vpc_pn_pdfraster_public_subnets_cidr = ["10.15.1.0/28","10.15.1.16/28","10.15.1.32/28"]
+vpc_pn_pdfraster_public_subnets_names = ["PN PdfRaster - Public Subnet (dev) AZ 0","PN PdfRaster - Public Subnet (dev) AZ 1","PN PdfRaster - Public Subnet (dev) AZ 2"]
+vpc_pn_pdfraster_internal_subnets_cidr = ["10.15.3.0/28","10.15.3.16/28","10.15.3.32/28","10.15.30.0/24","10.15.31.0/24","10.15.32.0/24","10.15.50.0/24","10.15.51.0/24","10.15.52.0/24"]
+vpc_pn_pdfraster_internal_subnets_names = ["PN PdfRaster - PdfRaster Ingress Subnet (dev) AZ 0","PN PdfRaster - PdfRaster Ingress Subnet (dev) AZ 1","PN PdfRaster - PdfRaster Ingress Subnet (dev) AZ 2","PN PdfRaster - PdfRaster Private Subnet (dev) AZ 0","PN PdfRaster - PdfRaster Private Subnet (dev) AZ 1","PN PdfRaster - PdfRaster Private Subnet (dev) AZ 2","PN PdfRaster - AWS Services Subnet (dev) AZ 0","PN PdfRaster - AWS Services Subnet (dev) AZ 1","PN PdfRaster - AWS Services Subnet (dev) AZ 2"]
+
+vpc_pn_pdfraster_pdfin_subnets_cidrs = ["10.15.3.0/28","10.15.3.16/28","10.15.3.32/28"]
+vpc_pn_pdfraster_pdfnet_subnets_cidrs = ["10.15.30.0/24","10.15.31.0/24","10.15.32.0/24"]
 
 
