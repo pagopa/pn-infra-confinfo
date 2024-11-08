@@ -214,6 +214,10 @@ variable "pn_cost_anomaly_detection_threshold" {
 
 ## pdfraster variables
 
+variable "pn_pdfraster_alb_idle_timeout" {
+  type        = number
+  description = "PDFRaster ALB Idle timeout in seconds"
+}
 
 variable "vpc_pn_pdfraster_aws_services_interface_endpoints_subnets_cidr" {
   type        = list(string)

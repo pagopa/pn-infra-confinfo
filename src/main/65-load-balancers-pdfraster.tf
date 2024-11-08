@@ -34,6 +34,8 @@ resource "aws_lb" "pn_pdfraster_ecs_alb" {
 
   enable_deletion_protection = false
 
+  idle_timeout = var.pn_pdfraster_alb_idle_timeout
+  
   tags = {
     "Name": "PN PdfRaster - ECS Cluster - ALB"
     "pn-eni-related": "true",
