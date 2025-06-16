@@ -24,6 +24,10 @@ output "ConfInfo_VpcEndpointsRequired" {
   description = "AWS services endpoints already created"
 }
 
+output "ConfInfo_EnvironmentType" { 
+  value       = var.environment
+  description = "Execution environment"
+}
 
 output "ConfInfo_VpcSubnets" {
   value = local.ConfInfo_SubnetsIds
