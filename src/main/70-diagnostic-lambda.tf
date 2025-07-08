@@ -15,12 +15,12 @@ locals {
   data_proxy_function_name = "diagnostic-data-proxy"
   data_proxy_current_build = file("${path.root}/../../functions/diagnostic-data-proxy/.current_build")
   data_proxy_filename      = "${path.root}/../../functions/diagnostic-data-proxy/${local.data_proxy_current_build}"
-  data_proxy_runtime       = "nodejs18.x"
+  data_proxy_runtime       = "nodejs22.x"
 
   list_lambda_function_name = "diagnostic-list-lambda"
   list_lambda_current_build = file("${path.root}/../../functions/diagnostic-list-lambda/.current_build")
   list_lambda_filename      = "${path.root}/../../functions/diagnostic-list-lambda/${local.list_lambda_current_build}"
-  list_lambda_runtime       = "nodejs18.x"
+  list_lambda_runtime       = "nodejs22.x"
 }
 
 # Configuring and deploying data-proxy
