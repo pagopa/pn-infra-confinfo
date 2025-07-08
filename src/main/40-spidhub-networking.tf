@@ -1,7 +1,7 @@
   
 module "vpc_pn_spid_hub" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.19.0"
+  version = "5.17.0"
 
   name = var.vpc_pn_spid_hub_name
   cidr = var.vpc_pn_spid_hub_primary_cidr
@@ -27,6 +27,11 @@ module "vpc_pn_spid_hub" {
   enable_vpn_gateway = false
 
   enable_dhcp_options              = false
+
+  manage_default_network_acl    = false
+  manage_default_route_table    = false
+  manage_default_security_group = false
+  map_public_ip_on_launch       = true
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                      = false
@@ -59,7 +64,7 @@ resource "aws_security_group" "vpc_pn_spid_hub__secgrp_tls" {
 
 module "vpc_endpoints_pn_spid_hub" {
   source = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
-  version = "3.19.0"
+  version = "5.17.0"
 
   vpc_id             = module.vpc_pn_spid_hub.vpc_id
   security_group_ids = [ aws_security_group.vpc_pn_spid_hub__secgrp_tls.id ]
