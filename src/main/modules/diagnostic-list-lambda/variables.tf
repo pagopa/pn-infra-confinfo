@@ -48,7 +48,7 @@ variable "handler" {
 variable "runtime" {
   description = "NodeJs runtime"
   type        = string
-  default     = "nodejs18.x"
+  default     = "nodejs22.x"
 }
 
 variable "current_aws_account_id" {
