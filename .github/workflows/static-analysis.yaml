@@ -30,9 +30,11 @@ jobs:
       - name: Filter SARIF to exclude MEDIUM and LOW
         run: |
           jq '
-            .runs[].results |= map(select(
-              (.properties.tags // []) | index("HIGH") or index("CRITICAL")
-            ))
+            .runs |= map(
+              .results |= map(select(
+                (.properties.tags // []) | index("HIGH") or index("CRITICAL")
+              ))
+            )
           ' trivy-results-raw.sarif > trivy-results.sarif
 
       - name: Upload Trivy scan results to GitHub Security tab
