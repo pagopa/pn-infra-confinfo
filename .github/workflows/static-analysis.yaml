@@ -22,7 +22,7 @@ jobs:
           input: './src'
           hide-progress: true
           format: 'sarif'
-          output: 'trivy-results.sarif'
+          output: 'trivy-results-raw.sarif'
           exit-code: '0'
           trivyignores: '.trivyignore'
           severity: 'CRITICAL,HIGH'
