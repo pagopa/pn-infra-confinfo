@@ -31,7 +31,7 @@ jobs:
         run: |
           jq '
             .runs[].results |= map(select(
-              .level == "error" or .level == "warning"
+              (.properties.tags // []) | index("HIGH") or index("CRITICAL")
             ))
           ' trivy-results-raw.sarif > trivy-results.sarif
 
