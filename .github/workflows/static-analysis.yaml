@@ -32,7 +32,7 @@ jobs:
           jq '
             .runs |= map(
               .results |= map(select(
-                (.properties.tags // []) | index("HIGH") or index("CRITICAL")
+                (.message.text | test("Severity: (HIGH|CRITICAL)"))
               ))
             )
           ' trivy-results-raw.sarif > trivy-results.sarif
