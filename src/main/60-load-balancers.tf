@@ -33,7 +33,8 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
   subnets            = local.ConfInfo_SubnetsIds
 
   enable_deletion_protection = false
-
+  drop_invalid_header_fields = true
+  
   tags = {
     "Name": "PN ConfInfo - ECS Cluster - ALB"
     "pn-eni-related": "true",
