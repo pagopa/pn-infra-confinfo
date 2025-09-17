@@ -31,6 +31,10 @@ variable "pn_postel_aws_account_id" {
   description = "current environment AWS Account id where postel has deployed PN connecting software"
 }
 
+variable "pn_cicd_aws_account_id" {
+  description = "Cicd AWS Account id"
+  type        = string
+}
 
 variable "dns_zone" {
   type        = string
@@ -275,3 +279,14 @@ variable "vpc_pn_pdfraster_pdfin_subnets_cidrs" {
   description = "Cidr list of Ingress subnets in VPC pn-pdfraster"
 }
 
+variable "external_roles_config" {
+  description = "Roles Maps"
+  type = map(object({
+    managed_policies = optional(list(string), [])
+    inline_policies  = optional(list(object({
+      name = string
+      file = string
+    })), [])
+  }))
+  default = {}
+}
