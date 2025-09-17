@@ -279,14 +279,11 @@ variable "vpc_pn_pdfraster_pdfin_subnets_cidrs" {
   description = "Cidr list of Ingress subnets in VPC pn-pdfraster"
 }
 
-variable "external_roles_config" {
-  description = "Roles Maps"
+variable "iam_ext_roles_config" {
   type = map(object({
-    managed_policies = optional(list(string), [])
+    managed_policies = list(string)
     inline_policies  = optional(list(object({
       name = string
-      file = string
     })), [])
   }))
-  default = {}
 }

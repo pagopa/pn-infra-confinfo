@@ -1,39 +1,5 @@
-locals {
-  managed_policy_attachments = {
-    for tuple in flatten([
-      for role_name, config in var.external_roles_config : [
-        for policy_name in config.managed_policies : {
-          key         = "${role_name}.${policy_name}"
-          role_name   = role_name
-          policy_name = policy_name
-        }
-      ]
-    ]) : tuple.key => {
-      role_name   = tuple.role_name
-      policy_name = tuple.policy_name
-    }
-  }
-
-  inline_policy_attachments = {
-    for tuple in flatten([
-      for role_name, config in var.external_roles_config : [
-        for inline_policy in config.inline_policies : {
-          key         = "${role_name}.${inline_policy.name}"
-          role_name   = role_name
-          policy_name = inline_policy.name
-          policy_file = inline_policy.file
-        }
-      ]
-    ]) : tuple.key => {
-      role_name   = tuple.role_name
-      policy_name = tuple.policy_name
-      policy_file = tuple.policy_file
-    }
-  }
-}
-
-resource "aws_iam_role" "external_role" {
-  for_each = var.external_roles_config
+resource "aws_iam_role" "iam_ext_role" {
+  for_each = var.iam_ext_roles_config
 
   name = "${each.key}-confinfo-${var.environment}"
 
@@ -57,17 +23,17 @@ resource "aws_iam_role" "external_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "managed" {
-  for_each = local.managed_policy_attachments
+  for_each = local.iam_managed_policy_attachments
 
-  role       = aws_iam_role.external_role[each.value.role_name].name
+  role       = aws_iam_role.iam_ext_role[each.value.role_name].name
   policy_arn = "arn:aws:iam::aws:policy/${each.value.policy_name}"
 }
 
 resource "aws_iam_role_policy" "inline" {
-  for_each = local.inline_policy_attachments
+  for_each = local.iam_inline_policy_attachments
 
   name = each.value.policy_name
-  role = aws_iam_role.external_role[each.value.role_name].id
+  role = aws_iam_role.iam_ext_role[each.value.role_name].id
 
   policy = jsonencode(
     jsondecode(

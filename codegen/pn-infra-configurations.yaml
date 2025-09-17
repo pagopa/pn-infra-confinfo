@@ -23,7 +23,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
-          external_roles_config:
+          iam_ext_roles_config:
             "SendExtAdmin":
               managed_policies:
                 - "AdministratorAccess"
@@ -32,7 +32,6 @@ envs:
                 - "ReadOnlyAccess"
               inline_policies:
                 - name: KmsDecrypt
-                  file: "./policies/kms-decrypt.json"
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
       - code: pn-cicd
@@ -61,7 +60,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
-          external_roles_config:
+          iam_ext_roles_config:
             "SendExtAdmin":
               managed_policies:
                 - "AdministratorAccess"
@@ -70,7 +69,6 @@ envs:
                 - "ReadOnlyAccess"
               inline_policies:
                 - name: KmsDecrypt
-                  file: "./policies/kms-decrypt.json"
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
       - code: pn-cicd
@@ -99,7 +97,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
-          external_roles_config:
+          iam_ext_roles_config:
             "SendExtAdmin":
               managed_policies:
                 - "AdministratorAccess"
@@ -108,7 +106,6 @@ envs:
                 - "ReadOnlyAccess"
               inline_policies:
                 - name: KmsDecrypt
-                  file: "./policies/kms-decrypt.json"
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
       - code: pn-cicd
@@ -163,7 +160,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
-          external_roles_config:
+          iam_ext_roles_config:
             "SendExtAdmin":
               managed_policies:
                 - "AdministratorAccess"
@@ -172,7 +169,6 @@ envs:
                 - "ReadOnlyAccess"
               inline_policies:
                 - name: KmsDecrypt
-                  file: "./policies/kms-decrypt.json"
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
       - code: pn-cicd
