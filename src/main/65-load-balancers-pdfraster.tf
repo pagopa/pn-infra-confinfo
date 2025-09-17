@@ -33,6 +33,7 @@ resource "aws_lb" "pn_pdfraster_ecs_alb" {
   subnets            = local.PdfRaster_SubnetsIds
 
   enable_deletion_protection = false
+  drop_invalid_header_fields = true
 
   tags = {
     "Name": "PN PdfRaster - ECS Cluster - ALB"
