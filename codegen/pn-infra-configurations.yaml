@@ -23,6 +23,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          pn_pdfraster_alb_idle_timeout: 60 # seconds
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
@@ -49,6 +50,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          pn_pdfraster_alb_idle_timeout: 60 # seconds
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
 
@@ -75,6 +77,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          pn_pdfraster_alb_idle_timeout: 60 # seconds
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
@@ -101,6 +104,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          pn_pdfraster_alb_idle_timeout: 60 # seconds
       - code: pn-postel
         aws_id: "350387752612"  # Stringhe non numeri
 
@@ -127,6 +131,7 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          pn_pdfraster_alb_idle_timeout: 60 # seconds
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
 
