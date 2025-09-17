@@ -11,7 +11,9 @@ pn_confinfo_aws_account_id = "956319218727"
 pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
 pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
 pn_cost_anomaly_detection_threshold = "10"
-pn_postel_aws_account_id = "911845998067"
+external_roles_config = {"SendExtAdmin":{"managed_policies":["AdministratorAccess"]},"SendExtReadOnly":{"managed_policies":["ReadOnlyAccess"],"inline_policies":[{"name":"KmsDecrypt","file":"./policies/kms-decrypt.json"}]}}
+pn_postel_aws_account_id = "554102482368"
+pn_cicd_aws_account_id = "911845998067"
 
 
 vpc_pn_confinfo_name = "PN ConfInfo"
