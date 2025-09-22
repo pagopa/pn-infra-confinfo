@@ -23,7 +23,18 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          iam_ext_roles_config:
+            "SendExtAdmin":
+              managed_policies:
+                - "AdministratorAccess"
+            SendExtReadOnly:
+              managed_policies:
+                - "ReadOnlyAccess"
+              inline_policies:
+                - name: KmsDecrypt
       - code: pn-postel
+        aws_id: "911845998067"  # Stringhe non numeri
+      - code: pn-cicd
         aws_id: "911845998067"  # Stringhe non numeri
 
   test:
@@ -49,8 +60,19 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          iam_ext_roles_config:
+            "SendExtAdmin":
+              managed_policies:
+                - "AdministratorAccess"
+            SendExtReadOnly:
+              managed_policies:
+                - "ReadOnlyAccess"
+              inline_policies:
+                - name: KmsDecrypt
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
+      - code: pn-cicd
+        aws_id: "911845998067"  # Stringhe non numeri
 
   uat:
     vpcs:
@@ -75,7 +97,18 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          iam_ext_roles_config:
+            "SendExtAdmin":
+              managed_policies:
+                - "AdministratorAccess"
+            SendExtReadOnly:
+              managed_policies:
+                - "ReadOnlyAccess"
+              inline_policies:
+                - name: KmsDecrypt
       - code: pn-postel
+        aws_id: "554102482368"  # Stringhe non numeri
+      - code: pn-cicd
         aws_id: "911845998067"  # Stringhe non numeri
 
   prod:
@@ -127,7 +160,18 @@ envs:
         params:
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
+          iam_ext_roles_config:
+            "SendExtAdmin":
+              managed_policies:
+                - "AdministratorAccess"
+            SendExtReadOnly:
+              managed_policies:
+                - "ReadOnlyAccess"
+              inline_policies:
+                - name: KmsDecrypt
       - code: pn-postel
+        aws_id: "554102482368"  # Stringhe non numeri
+      - code: pn-cicd
         aws_id: "911845998067"  # Stringhe non numeri
 
 accounts:
