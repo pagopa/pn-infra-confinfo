@@ -125,5 +125,37 @@ locals {
           cidr
             if contains( var.vpc_pn_pdfraster_pdfin_subnets_cidrs, cidr)
     ]
+
+  iam_managed_policy_attachments = {
+    for tuple in flatten([
+      for role_name, config in var.iam_ext_roles_config : [
+        for policy_name in config.managed_policies : {
+          key         = "${role_name}.${policy_name}"
+          role_name   = role_name
+          policy_name = policy_name
+        }
+      ]
+    ]) : tuple.key => {
+      role_name   = tuple.role_name
+      policy_name = tuple.policy_name
+    }
+  }
+
+  iam_inline_policy_attachments = {
+    for tuple in flatten([
+      for role_name, config in var.iam_ext_roles_config : [
+        for inline_policy in lookup(config, "inline_policies", []) : {
+          key         = "${role_name}.${inline_policy.name}"
+          role_name   = role_name
+          policy_name = inline_policy.name
+          policy_file = "./policies/${inline_policy.name}.json"
+        }
+      ]
+    ]) : tuple.key => {
+      role_name   = tuple.role_name
+      policy_name = tuple.policy_name
+      policy_file = tuple.policy_file
+    }
+  }
   
 }
