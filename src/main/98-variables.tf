@@ -34,6 +34,7 @@ variable "pn_postel_aws_account_id" {
 variable "pn_cicd_aws_account_id" {
   description = "Cicd AWS Account id"
   type        = string
+  default     = ""
 }
 
 variable "dns_zone" {
@@ -286,4 +287,5 @@ variable "iam_ext_roles_config" {
       name = string
     })), [])
   }))
+  default     = {}
 }
