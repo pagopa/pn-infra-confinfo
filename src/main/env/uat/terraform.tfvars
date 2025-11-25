@@ -19,7 +19,7 @@ pn_cicd_aws_account_id = "911845998067"
 vpc_pn_confinfo_name = "PN ConfInfo"
 vpc_pn_confinfo_primary_cidr = "10.8.0.0/16"
 vpc_pn_confinfo_aws_services_interface_endpoints_subnets_cidr = ["10.8.50.0/24","10.8.51.0/24","10.8.52.0/24"]
-vpc_endpoints_pn_confinfo = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","xray"]
+vpc_endpoints_pn_confinfo = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","scheduler","xray"]
 
 vpc_pn_confinfo_private_subnets_cidr = ["10.8.10.0/24","10.8.11.0/24","10.8.12.0/24"]
 vpc_pn_confinfo_private_subnets_names = ["PN ConfInfo - ConfInfo Egress Subnet (uat) AZ 0","PN ConfInfo - ConfInfo Egress Subnet (uat) AZ 1","PN ConfInfo - ConfInfo Egress Subnet (uat) AZ 2"]
@@ -59,7 +59,7 @@ vpc_pn_spid_hub_internal_subnets_names = []
 vpc_pn_pdfraster_name = "PN PdfRaster"
 vpc_pn_pdfraster_primary_cidr = "10.17.0.0/16"
 vpc_pn_pdfraster_aws_services_interface_endpoints_subnets_cidr = ["10.17.50.0/24","10.17.51.0/24","10.17.52.0/24"]
-vpc_endpoints_pn_pdfraster = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","xray"]
+vpc_endpoints_pn_pdfraster = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","scheduler","xray"]
 
 vpc_pn_pdfraster_private_subnets_cidr = []
 vpc_pn_pdfraster_private_subnets_names = []
