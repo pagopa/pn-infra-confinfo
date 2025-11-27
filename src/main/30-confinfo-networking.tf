@@ -31,7 +31,7 @@ module "vpc_pn_confinfo" {
   manage_default_network_acl    = false
   manage_default_route_table    = false
   manage_default_security_group = false
-  map_public_ip_on_launch       = true
+  map_public_ip_on_launch       = false
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                      = false
