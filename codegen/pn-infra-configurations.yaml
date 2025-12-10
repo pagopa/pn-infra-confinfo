@@ -204,6 +204,7 @@ accounts:
             - "ecs"
             - "secretsmanager"
             - "monitoring"
+            - "scheduler"
             - "xray"
         networks:
           - code: public
@@ -307,6 +308,7 @@ accounts:
             - "ecs"
             - "secretsmanager"
             - "monitoring"
+            - "scheduler"
             - "xray"
         networks:
           - code: public
