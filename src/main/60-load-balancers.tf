@@ -34,6 +34,18 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
 
   enable_deletion_protection = false
   drop_invalid_header_fields = true
+
+  access_logs {
+    bucket  = aws_s3_bucket.pn_confinfo_alb_logs_bucket.bucket
+    prefix  = "EcsA-access-logs"
+    enabled = var.enable_access_logs_alb_ecsa
+  }
+
+  connection_logs {
+    bucket  = aws_s3_bucket.pn_confinfo_alb_logs_bucket.bucket
+    prefix  = "EcsA-connection-logs"
+    enabled = var.enable_connection_logs_alb_ecsa
+  }
   
   tags = {
     "Name": "PN ConfInfo - ECS Cluster - ALB"
@@ -403,4 +415,56 @@ resource "aws_network_acl_association" "nlb_postel" {
 
   network_acl_id = aws_network_acl.call_8080_do_not_receive.id
   subnet_id      = local.ConfInfo_NlbPostel_SubnetsIds[ count.index ]
+}
+
+resource "aws_s3_bucket" "pn_confinfo_alb_logs_bucket" {
+  bucket = "pn-confinfo-alb-logs-${var.environment}-${var.aws_region}-${var.pn_confinfo_aws_account_id}"
+  tags = {
+    Name = "PN ConfInfo - ALB Logs Bucket"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "pn_confinfo_alb_logs_bucket_public_access_block" {
+  bucket = aws_s3_bucket.pn_confinfo_alb_logs_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_policy" "pn_confinfo_alb_logs_bucket_policy" {
+  bucket = aws_s3_bucket.pn_confinfo_alb_logs_bucket.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "AWSLoadBalancerWriteAccess"
+        Effect    = "Allow"
+        Principal = {
+          Service = "logdelivery.elasticloadbalancing.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.pn_confinfo_alb_logs_bucket.arn}/*"
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = var.pn_confinfo_aws_account_id
+          }
+          ArnLike = {
+            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.aws_region}:${var.pn_confinfo_aws_account_id}:loadbalancer/app/*"
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "alb_logs" {
+  bucket = aws_s3_bucket.pn_confinfo_alb_logs_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }

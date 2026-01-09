@@ -11,6 +11,10 @@ pn_confinfo_aws_account_id = "350578575906"
 pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-0b01face6c74fe25f"
 pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
 pn_cost_anomaly_detection_threshold = "10"
+enable_access_logs_alb_ecsa = false
+enable_connection_logs_alb_ecsa = false
+enable_access_logs_alb_pdfraster = false
+enable_connection_logs_alb_pdfraster = false
 pn_postel_aws_account_id = "350387752612"
 
 
