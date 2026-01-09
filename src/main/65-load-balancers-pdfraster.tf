@@ -35,6 +35,17 @@ resource "aws_lb" "pn_pdfraster_ecs_alb" {
   enable_deletion_protection = false
   drop_invalid_header_fields = true
 
+  access_logs {
+    bucket  = aws_s3_bucket.pn_confinfo_alb_logs_bucket.bucket
+    prefix  = "EcsPf-access-logs"
+    enabled = var.enable_access_logs_alb_pdfraster
+  }
+
+  connection_logs {
+    bucket  = aws_s3_bucket.pn_confinfo_alb_logs_bucket.bucket
+    prefix  = "EcsPf-connection-logs"
+    enabled = var.enable_connection_logs_alb_pdfraster
+  }
   tags = {
     "Name": "PN PdfRaster - ECS Cluster - ALB"
     "pn-eni-related": "true",
