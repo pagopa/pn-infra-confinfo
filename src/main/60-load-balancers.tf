@@ -458,3 +458,13 @@ resource "aws_s3_bucket_policy" "pn_confinfo_alb_logs_bucket_policy" {
     ]
   })
 }
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "alb_logs" {
+  bucket = aws_s3_bucket.pn_confinfo_alb_logs_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
