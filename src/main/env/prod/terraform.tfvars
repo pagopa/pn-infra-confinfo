@@ -21,7 +21,7 @@ pn_postel_aws_account_id = "350387752612"
 vpc_pn_confinfo_name = "PN ConfInfo"
 vpc_pn_confinfo_primary_cidr = "10.11.0.0/16"
 vpc_pn_confinfo_aws_services_interface_endpoints_subnets_cidr = ["10.11.50.0/24","10.11.51.0/24","10.11.52.0/24"]
-vpc_endpoints_pn_confinfo = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","scheduler","xray"]
+vpc_endpoints_pn_confinfo = ["sqs","logs","sns","kms","kinesis-streams","elasticloadbalancing","events","ecr.api","ecr.dkr","ssmmessages","ssm","ec2messages","ecs-agent","ecs-telemetry","ecs","secretsmanager","monitoring","scheduler","xray","kinesis-firehose"]
 
 vpc_pn_confinfo_private_subnets_cidr = ["10.11.10.0/24","10.11.11.0/24","10.11.12.0/24"]
 vpc_pn_confinfo_private_subnets_names = ["PN ConfInfo - ConfInfo Egress Subnet (prod) AZ 0","PN ConfInfo - ConfInfo Egress Subnet (prod) AZ 1","PN ConfInfo - ConfInfo Egress Subnet (prod) AZ 2"]

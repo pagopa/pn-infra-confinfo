@@ -226,6 +226,7 @@ accounts:
             - "monitoring"
             - "scheduler"
             - "xray"
+            - "kinesis-firehose"
         networks:
           - code: public
             name: Public
