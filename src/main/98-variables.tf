@@ -31,6 +31,20 @@ variable "pn_postel_aws_account_id" {
   description = "current environment AWS Account id where postel has deployed PN connecting software"
 }
 
+variable "cons_norm_private_link_listener_port" {
+  type        = number
+  description = "Dedicated ALB listener port for the ConsNorm PrivateLink channel"
+  default     = 8082
+
+  validation {
+    condition = (
+      var.cons_norm_private_link_listener_port >= 8081 &&
+      var.cons_norm_private_link_listener_port <= 65535
+    )
+    error_message = "ConsNorm PrivateLink listener port must be between 8081 and 65535. Port 8080 is reserved for the standard ALB listener."
+  }
+}
+
 variable "pn_cicd_aws_account_id" {
   description = "Cicd AWS Account id"
   type        = string
