@@ -95,13 +95,6 @@ resource "aws_lb_listener" "pn_confinfo_ecs_alb_cons_norm_private_link" {
   }
 }
 
-moved {
-  from = aws_lb_listener.pn_confinfo_ecs_alb_cons_norm_private_link_8082
-  to   = aws_lb_listener.pn_confinfo_ecs_alb_cons_norm_private_link
-}
-
-
-
 # - NLB Di ingresso per le invocazioni a Data Vault
 resource "aws_lb" "pn_confinfo_dvin_nlb" {
   name_prefix = "DvI-"
