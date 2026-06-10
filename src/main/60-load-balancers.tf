@@ -300,7 +300,11 @@ resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_alb_http" {
   port        = var.cons_norm_private_link_listener_port
   protocol    = "TCP"
   target_type = "alb"
-  
+
+  lifecycle {
+    create_before_destroy = true
+  }
+   
   depends_on = [
     aws_lb.pn_confinfo_postel_nlb,
     aws_lb.pn_confinfo_ecs_alb,
@@ -322,6 +326,10 @@ resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_alb_ht
   port              = var.cons_norm_private_link_listener_port
 
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # - Postel NLB listener for HTTPS
