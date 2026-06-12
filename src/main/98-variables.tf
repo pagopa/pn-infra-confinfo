@@ -148,6 +148,12 @@ variable "pn_confinfo_to_postel_vpcse" {
   description = "Postel VPC Service endpoint exposing 'consolidatore' services"
 }
 
+variable "cons_norm_private_link_listener_port" {
+  type        = number
+  description = "Dedicated ALB listener port for the ConsNorm PrivateLink channel"
+  default     = 8082
+}
+
 variable "vpc_pn_confinfo_to_pdfraster_subnets_cidrs" {
   type        = list(string)
   description = "Cidr list of PdfRaster interconnection subnets in VPC pn-confinfo"

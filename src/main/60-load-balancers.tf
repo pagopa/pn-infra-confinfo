@@ -12,6 +12,14 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_webapp" {
     protocol    = "tcp"
     cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
   }
+
+  ingress {
+    description = "ConsNorm PrivateLink listener from VPC"
+    from_port   = var.cons_norm_private_link_listener_port
+    to_port     = var.cons_norm_private_link_listener_port
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
+  }
   
   egress {
     from_port        = 0
@@ -57,6 +65,22 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
 resource "aws_lb_listener" "pn_confinfo_ecs_alb_8080" {
   load_balancer_arn = aws_lb.pn_confinfo_ecs_alb.arn
   port              = "8080"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "application/json"
+      message_body = "{ \"error\": \"404\", \"message\": \"Load balancer rule not configured\" }"
+      status_code  = "404"
+    }
+  }
+}
+
+resource "aws_lb_listener" "pn_confinfo_ecs_alb_cons_norm_private_link" {
+  load_balancer_arn = aws_lb.pn_confinfo_ecs_alb.arn
+  port              = var.cons_norm_private_link_listener_port
   protocol          = "HTTP"
 
   default_action {
@@ -300,6 +324,37 @@ resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_alb_ht
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
 }
 
+resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_cons_norm_private_link" {
+  name_prefix = "PtP-"
+  vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  port        = var.cons_norm_private_link_listener_port
+  protocol    = "TCP"
+  target_type = "alb"
+
+  depends_on = [
+    aws_lb.pn_confinfo_postel_nlb,
+    aws_lb.pn_confinfo_ecs_alb,
+    aws_lb_listener.pn_confinfo_ecs_alb_cons_norm_private_link
+  ]
+
+  tags = {
+    "Description": "PN Confinfo - Postel NLB to dedicated ConsNorm PrivateLink ALB listener - Target Group"
+  }
+
+  health_check {
+    enabled = true
+    matcher = "200-499"
+  }
+}
+
+resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_cons_norm_private_link" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_cons_norm_private_link.arn
+  port              = var.cons_norm_private_link_listener_port
+
+  target_id         = aws_lb.pn_confinfo_ecs_alb.arn
+}
+
 # - Postel NLB listener for HTTPS
 resource "aws_lb_listener" "pn_confinfo_postel_nlb_https_to_nlb_http" {
   load_balancer_arn = aws_lb.pn_confinfo_postel_nlb.arn
@@ -365,6 +420,19 @@ resource "aws_network_acl" "call_8080_do_not_receive" {
     }
   }
 
+  dynamic "egress" {
+    for_each = local.ConfInfo_SubnetsCidrs
+
+    content {
+      protocol   = "tcp"
+      rule_no    = 2000 + 100 * egress.key
+      action     = "allow"
+      cidr_block = egress.value
+      from_port  = var.cons_norm_private_link_listener_port
+      to_port    = var.cons_norm_private_link_listener_port
+    }
+  }
+
   dynamic "ingress" {
     for_each = local.ConfInfo_SubnetsCidrs
 
@@ -392,7 +460,7 @@ resource "aws_network_acl" "call_8080_do_not_receive" {
   }
 
   tags = {
-    Name = "Outbound 8080 to ALB not inbound"
+    Name = "Outbound 8080 and ${var.cons_norm_private_link_listener_port} to ALB not inbound"
   }
 }
 
