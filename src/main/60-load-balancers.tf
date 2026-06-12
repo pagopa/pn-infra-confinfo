@@ -324,7 +324,7 @@ resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_alb_ht
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
 }
 
-resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_cons_norm_private_link" {
+resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http" {
   name_prefix = "PtP-"
   vpc_id      = module.vpc_pn_confinfo.vpc_id
 
@@ -339,7 +339,7 @@ resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_cons_norm_private
   ]
 
   tags = {
-    "Description": "PN Confinfo - Postel NLB to dedicated ConsNorm PrivateLink ALB listener - Target Group"
+    "Description": "PN Confinfo - Postel NLB to dedicated ALB listener - Target Group"
   }
 
   health_check {
@@ -348,8 +348,8 @@ resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_cons_norm_private
   }
 }
 
-resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_cons_norm_private_link" {
-  target_group_arn  = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_cons_norm_private_link.arn
+resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http.arn
   port              = var.cons_norm_private_link_listener_port
 
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
