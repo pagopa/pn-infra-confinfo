@@ -72,6 +72,11 @@ output "ConfInfo_ApplicationLoadBalancerListenerArn" {
   description = "ECS cluster Application Load Balancer Listener ARN, attach here new microservice routing rule"
 }
 
+output "ConfInfo_ConsNormPrivateLinkListenerArn" {
+  value = aws_lb_listener.pn_confinfo_ecs_alb_cons_norm_private_link.arn
+  description = "Dedicated ALB listener ARN for the ConsNorm PrivateLink channel"
+}
+
 
 output "ConfInfo_WebappSecurityGroupId" {
   value = aws_security_group.vpc_pn_confinfo__secgrp_webapp.id

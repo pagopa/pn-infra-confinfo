@@ -13,6 +13,7 @@ pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
 pn_cost_anomaly_detection_threshold = "10"
 enable_access_logs_alb_ecsa = false
 enable_connection_logs_alb_ecsa = false
+cons_norm_private_link_listener_port = 8082
 enable_access_logs_alb_pdfraster = false
 enable_connection_logs_alb_pdfraster = false
 iam_ext_roles_config = {"SendExtAdmin":{"managed_policies":["AdministratorAccess"]},"SendExtReadOnly":{"managed_policies":["ReadOnlyAccess"],"inline_policies":[{"name":"KmsDecrypt"}]}}
@@ -74,4 +75,5 @@ vpc_pn_pdfraster_internal_subnets_names = ["PN PdfRaster - PdfRaster Ingress Sub
 
 vpc_pn_pdfraster_pdfin_subnets_cidrs = ["10.15.3.0/28","10.15.3.16/28","10.15.3.32/28"]
 vpc_pn_pdfraster_pdfnet_subnets_cidrs = ["10.15.30.0/24","10.15.31.0/24","10.15.32.0/24"]
+
 

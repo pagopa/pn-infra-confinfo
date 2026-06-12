@@ -31,6 +31,12 @@ variable "pn_postel_aws_account_id" {
   description = "current environment AWS Account id where postel has deployed PN connecting software"
 }
 
+variable "cons_norm_private_link_listener_port" {
+  type        = number
+  description = "Dedicated ALB listener port for the ConsNorm PrivateLink channel"
+  default     = 8082
+}
+
 variable "pn_cicd_aws_account_id" {
   description = "Cicd AWS Account id"
   type        = string

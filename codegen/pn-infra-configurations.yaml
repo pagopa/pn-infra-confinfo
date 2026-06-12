@@ -25,6 +25,7 @@ envs:
           pn_cost_anomaly_detection_threshold: "10"
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
+          cons_norm_private_link_listener_port: 8082
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
           iam_ext_roles_config:
@@ -66,6 +67,7 @@ envs:
           pn_cost_anomaly_detection_threshold: "10"
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
+          cons_norm_private_link_listener_port: 8082
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
           iam_ext_roles_config:

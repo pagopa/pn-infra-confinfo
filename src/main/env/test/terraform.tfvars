@@ -13,6 +13,7 @@ pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
 pn_cost_anomaly_detection_threshold = "10"
 enable_access_logs_alb_ecsa = false
 enable_connection_logs_alb_ecsa = false
+cons_norm_private_link_listener_port = 8082
 enable_access_logs_alb_pdfraster = false
 enable_connection_logs_alb_pdfraster = false
 iam_ext_roles_config = {"SendExtAdmin":{"managed_policies":["AdministratorAccess"]},"SendExtReadOnly":{"managed_policies":["ReadOnlyAccess"],"inline_policies":[{"name":"KmsDecrypt"}]}}
