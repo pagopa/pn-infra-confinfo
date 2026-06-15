@@ -142,6 +142,24 @@ variable "vpc_pn_confinfo_postel_subnets_cidrs" {
   description = "Cidr list of Postel interconnection subnets in VPC pn-confinfo"
 }
 
+variable "cons_norm_private_link_listener_port" {
+  type        = number
+  description = "Dedicated ALB listener port for the ConsNorm PrivateLink channel"
+  default     = 8082
+}
+
+variable "postel_private_link_legacy_weight" {
+  type        = number
+  description = "Legacy NLB target group weight for the Postel PrivateLink channel"
+  default     = 100
+}
+
+variable "postel_private_link_dedicated_weight" {
+  type        = number
+  description = "Dedicated NLB target group weight for the Postel PrivateLink channel"
+  default     = 0
+}
+
 
 variable "pn_confinfo_to_postel_vpcse" {
   type        = string
