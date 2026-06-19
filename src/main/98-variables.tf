@@ -37,6 +37,12 @@ variable "pn_cicd_aws_account_id" {
   default     = ""
 }
 
+variable "pn_postel_private_link_additional_allowed_principal_account_ids" {
+  description = "Additional allowed principal account ids for Postel PrivateLink endpoint service"
+  type        = list(string)
+  default     = []
+}
+
 variable "dns_zone" {
   type        = string
   description = "Dns zone used for the environment"
