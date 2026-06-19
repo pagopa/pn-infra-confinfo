@@ -12,6 +12,14 @@ resource "aws_security_group" "vpc_pn_confinfo__secgrp_webapp" {
     protocol    = "tcp"
     cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
   }
+
+  ingress {
+    description = "ConsNorm PrivateLink listener port from VPC"
+    from_port   = var.cons_norm_private_link_listener_port
+    to_port     = var.cons_norm_private_link_listener_port
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_pn_confinfo_primary_cidr]
+  }
   
   egress {
     from_port        = 0
@@ -57,6 +65,23 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
 resource "aws_lb_listener" "pn_confinfo_ecs_alb_8080" {
   load_balancer_arn = aws_lb.pn_confinfo_ecs_alb.arn
   port              = "8080"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "application/json"
+      message_body = "{ \"error\": \"404\", \"message\": \"Load balancer rule not configured\" }"
+      status_code  = "404"
+    }
+  }
+}
+
+# - ECS cluster Application load balancer HTTP listener dedicated to ConsNorm PrivateLink
+resource "aws_lb_listener" "pn_confinfo_ecs_alb_cons_norm_private_link" {
+  load_balancer_arn = aws_lb.pn_confinfo_ecs_alb.arn
+  port              = var.cons_norm_private_link_listener_port
   protocol          = "HTTP"
 
   default_action {
@@ -252,7 +277,10 @@ resource "aws_lb" "pn_confinfo_postel_nlb" {
 resource "aws_vpc_endpoint_service" "pn_confinfo_postel_endpoint_svc" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.pn_confinfo_postel_nlb.arn]
-  allowed_principals         = ["arn:aws:iam::${var.pn_postel_aws_account_id}:root"]
+  allowed_principals         = distinct(concat(
+    ["arn:aws:iam::${var.pn_postel_aws_account_id}:root"],
+    [for account_id in var.pn_postel_private_link_additional_allowed_principal_account_ids : "arn:aws:iam::${account_id}:root"]
+  ))
 
   tags = {
     "Name": "PN Confinfo - Postel - SVC endpoint"
@@ -265,8 +293,19 @@ resource "aws_lb_listener" "pn_confinfo_postel_nlb_http_to_alb_http" {
   port     = 8080
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_alb_http.arn
+    type = "forward"
+
+    forward {
+      target_group {
+        arn    = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_alb_http.arn
+        weight = var.postel_private_link_legacy_weight
+      }
+
+      target_group {
+        arn    = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http.arn
+        weight = var.postel_private_link_dedicated_weight
+      }
+    }
   }
 }
 # - Postel NLB target group for HTTP
@@ -296,6 +335,39 @@ resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_alb_http" {
 resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_alb_http" {
   target_group_arn  = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_alb_http.arn
   port              = 8080
+
+  target_id         = aws_lb.pn_confinfo_ecs_alb.arn
+}
+
+# - Postel NLB target group for dedicated ConsNorm PrivateLink ALB listener
+resource "aws_lb_target_group" "pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http" {
+  name_prefix = "PtP-"
+  vpc_id      = module.vpc_pn_confinfo.vpc_id
+
+  port        = var.cons_norm_private_link_listener_port
+  protocol    = "TCP"
+  target_type = "alb"
+
+  depends_on = [
+    aws_lb.pn_confinfo_postel_nlb,
+    aws_lb.pn_confinfo_ecs_alb,
+    aws_lb_listener.pn_confinfo_ecs_alb_cons_norm_private_link
+  ]
+
+  tags = {
+    "Description": "PN Confinfo - Postel NLB to dedicated ALB listener - Target Group"
+  }
+
+  health_check {
+    enabled = true
+    matcher = "200-499"
+  }
+}
+
+# - Postel NLB target group attachment for dedicated ConsNorm PrivateLink ALB listener
+resource "aws_lb_target_group_attachment" "pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http" {
+  target_group_arn  = aws_lb_target_group.pn_confinfo_postel_nlb_http_to_dedicated_alb_listener_http.arn
+  port              = var.cons_norm_private_link_listener_port
 
   target_id         = aws_lb.pn_confinfo_ecs_alb.arn
 }
@@ -362,6 +434,19 @@ resource "aws_network_acl" "call_8080_do_not_receive" {
       cidr_block = egress.value
       from_port  = 8080
       to_port    = 8080
+    }
+  }
+
+  dynamic "egress" {
+    for_each = local.ConfInfo_SubnetsCidrs
+
+    content {
+      protocol   = "tcp"
+      rule_no    = 2000 + 100 * egress.key
+      action     = "allow"
+      cidr_block = egress.value
+      from_port  = var.cons_norm_private_link_listener_port
+      to_port    = var.cons_norm_private_link_listener_port
     }
   }
 

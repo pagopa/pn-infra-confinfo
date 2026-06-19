@@ -37,6 +37,12 @@ variable "pn_cicd_aws_account_id" {
   default     = ""
 }
 
+variable "pn_postel_private_link_additional_allowed_principal_account_ids" {
+  description = "Additional allowed principal account ids for Postel PrivateLink endpoint service"
+  type        = list(string)
+  default     = []
+}
+
 variable "dns_zone" {
   type        = string
   description = "Dns zone used for the environment"
@@ -140,6 +146,24 @@ variable "vpc_pn_confinfo_ecssin_subnets_cidrs" {
 variable "vpc_pn_confinfo_postel_subnets_cidrs" {
   type        = list(string)
   description = "Cidr list of Postel interconnection subnets in VPC pn-confinfo"
+}
+
+variable "cons_norm_private_link_listener_port" {
+  type        = number
+  description = "Dedicated ALB listener port for the ConsNorm PrivateLink channel"
+  default     = 8082
+}
+
+variable "postel_private_link_legacy_weight" {
+  type        = number
+  description = "Legacy NLB target group weight for the Postel PrivateLink channel"
+  default     = 100
+}
+
+variable "postel_private_link_dedicated_weight" {
+  type        = number
+  description = "Dedicated NLB target group weight for the Postel PrivateLink channel"
+  default     = 0
 }
 
 
