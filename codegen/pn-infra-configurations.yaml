@@ -21,6 +21,8 @@ envs:
           #to_postel: "none"
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
         params:
+          pn_postel_private_link_additional_allowed_principal_account_ids:
+            - "911845998067"
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
           enable_access_logs_alb_ecsa: false
@@ -65,6 +67,8 @@ envs:
           #to_postel: "none"
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-0a03e3680c586118c"
         params:
+          pn_postel_private_link_additional_allowed_principal_account_ids:
+            - "911845998067"
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
           enable_access_logs_alb_ecsa: false
@@ -109,6 +113,8 @@ envs:
           #to_postel: "none"
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
         params:
+          pn_postel_private_link_additional_allowed_principal_account_ids:
+            - "911845998067"
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
           enable_access_logs_alb_ecsa: false
@@ -186,6 +192,8 @@ envs:
           #to_postel: "none"
           to_postel: "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
         params:
+          pn_postel_private_link_additional_allowed_principal_account_ids:
+            - "911845998067"
           pn_cost_anomaly_detection_email: "pn-irt-team@pagopa.it"
           pn_cost_anomaly_detection_threshold: "10"
           enable_access_logs_alb_ecsa: false

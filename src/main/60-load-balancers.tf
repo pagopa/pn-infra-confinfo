@@ -277,7 +277,10 @@ resource "aws_lb" "pn_confinfo_postel_nlb" {
 resource "aws_vpc_endpoint_service" "pn_confinfo_postel_endpoint_svc" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.pn_confinfo_postel_nlb.arn]
-  allowed_principals         = ["arn:aws:iam::${var.pn_postel_aws_account_id}:root"]
+  allowed_principals         = distinct(concat(
+    ["arn:aws:iam::${var.pn_postel_aws_account_id}:root"],
+    [for account_id in var.pn_postel_private_link_additional_allowed_principal_account_ids : "arn:aws:iam::${account_id}:root"]
+  ))
 
   tags = {
     "Name": "PN Confinfo - Postel - SVC endpoint"
