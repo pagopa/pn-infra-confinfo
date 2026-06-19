@@ -28,8 +28,8 @@ envs:
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
           cons_norm_private_link_listener_port: 8082
-          postel_private_link_legacy_weight: 0
-          postel_private_link_dedicated_weight: 100
+          postel_private_link_legacy_weight: 100
+          postel_private_link_dedicated_weight: 0
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
           iam_ext_roles_config:
@@ -74,8 +74,8 @@ envs:
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
           cons_norm_private_link_listener_port: 8082
-          postel_private_link_legacy_weight: 0
-          postel_private_link_dedicated_weight: 100
+          postel_private_link_legacy_weight: 100
+          postel_private_link_dedicated_weight: 0
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
           iam_ext_roles_config:
@@ -120,8 +120,8 @@ envs:
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
           cons_norm_private_link_listener_port: 8082
-          postel_private_link_legacy_weight: 0
-          postel_private_link_dedicated_weight: 100
+          postel_private_link_legacy_weight: 100
+          postel_private_link_dedicated_weight: 0
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
           iam_ext_roles_config:
@@ -164,8 +164,8 @@ envs:
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
           cons_norm_private_link_listener_port: 8082
-          postel_private_link_legacy_weight: 0
-          postel_private_link_dedicated_weight: 100
+          postel_private_link_legacy_weight: 100
+          postel_private_link_dedicated_weight: 0
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
       - code: pn-postel
@@ -199,8 +199,8 @@ envs:
           enable_access_logs_alb_ecsa: false
           enable_connection_logs_alb_ecsa: false
           cons_norm_private_link_listener_port: 8082
-          postel_private_link_legacy_weight: 0
-          postel_private_link_dedicated_weight: 100
+          postel_private_link_legacy_weight: 100
+          postel_private_link_dedicated_weight: 0
           enable_access_logs_alb_pdfraster: false
           enable_connection_logs_alb_pdfraster: false
           iam_ext_roles_config:
