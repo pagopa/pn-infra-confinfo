@@ -41,6 +41,17 @@ envs:
                 - "ReadOnlyAccess"
               inline_policies:
                 - name: KmsDecrypt
+            SendExtPowerUser:
+              managed_policies:
+                - "ReadOnlyAccess"
+                - "AmazonSSMFullAccess"
+                - "SecretsManagerReadWrite"
+                - "AWSCodeBuildDeveloperAccess"
+                - "AmazonDynamoDBFullAccess"
+                - "AWSCloudShellFullAccess"
+                - "AmazonS3FullAccess"
+              inline_policies:
+                - name: KmsDecrypt
       - code: pn-postel
         aws_id: "911845998067"  # Stringhe non numeri
       - code: pn-cicd
@@ -87,6 +98,17 @@ envs:
                 - "ReadOnlyAccess"
               inline_policies:
                 - name: KmsDecrypt
+            SendExtPowerUser:
+              managed_policies:
+                - "ReadOnlyAccess"
+                - "AmazonSSMFullAccess"
+                - "SecretsManagerReadWrite"
+                - "AWSCodeBuildDeveloperAccess"
+                - "AmazonDynamoDBFullAccess"
+                - "AWSCloudShellFullAccess"
+                - "AmazonS3FullAccess"
+              inline_policies:
+                - name: KmsDecrypt
       - code: pn-postel
         aws_id: "554102482368"  # Stringhe non numeri
       - code: pn-cicd
@@ -131,6 +153,17 @@ envs:
             SendExtReadOnly:
               managed_policies:
                 - "ReadOnlyAccess"
+              inline_policies:
+                - name: KmsDecrypt
+            SendExtPowerUser:
+              managed_policies:
+                - "ReadOnlyAccess"
+                - "AmazonSSMFullAccess"
+                - "SecretsManagerReadWrite"
+                - "AWSCodeBuildDeveloperAccess"
+                - "AmazonDynamoDBFullAccess"
+                - "AWSCloudShellFullAccess"
+                - "AmazonS3FullAccess"
               inline_policies:
                 - name: KmsDecrypt
       - code: pn-postel
@@ -210,6 +243,17 @@ envs:
             SendExtReadOnly:
               managed_policies:
                 - "ReadOnlyAccess"
+              inline_policies:
+                - name: KmsDecrypt
+            SendExtPowerUser:
+              managed_policies:
+                - "ReadOnlyAccess"
+                - "AmazonSSMFullAccess"
+                - "SecretsManagerReadWrite"
+                - "AWSCodeBuildDeveloperAccess"
+                - "AmazonDynamoDBFullAccess"
+                - "AWSCloudShellFullAccess"
+                - "AmazonS3FullAccess"
               inline_policies:
                 - name: KmsDecrypt
       - code: pn-postel
