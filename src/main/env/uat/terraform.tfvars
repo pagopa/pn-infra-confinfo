@@ -19,7 +19,7 @@ postel_private_link_legacy_weight = 0
 postel_private_link_dedicated_weight = 100
 enable_access_logs_alb_pdfraster = false
 enable_connection_logs_alb_pdfraster = false
-iam_ext_roles_config = {"SendExtAdmin":{"managed_policies":["AdministratorAccess"]},"SendExtReadOnly":{"managed_policies":["ReadOnlyAccess"],"inline_policies":[{"name":"KmsDecrypt"}]}}
+iam_ext_roles_config = {"SendExtAdmin":{"managed_policies":["AdministratorAccess"]},"SendExtReadOnly":{"managed_policies":["ReadOnlyAccess"],"inline_policies":[{"name":"KmsDecrypt"}]},"SendExtPowerUser":{"managed_policies":["ReadOnlyAccess","AmazonSSMFullAccess","SecretsManagerReadWrite","AWSCodeBuildDeveloperAccess","AmazonDynamoDBFullAccess","AWSCloudShellFullAccess","AmazonS3FullAccess"],"inline_policies":[{"name":"KmsDecrypt"}]}}
 pn_postel_aws_account_id = "554102482368"
 pn_cicd_aws_account_id = "911845998067"
 
