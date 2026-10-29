@@ -9,6 +9,7 @@ apigw_custom_domains = []
 pn_core_aws_account_id = "830192246553"
 pn_confinfo_aws_account_id = "089813480515"
 pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-01aaf09f48eb7db56"
+ses_mail_identity = {"domain_name":"mail.dev.notifichedigitali.it","configuration_set_name":"testses","email_forwarding_enabled":true}
 pn_postel_private_link_additional_allowed_principal_account_ids = ["911845998067"]
 pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
 pn_cost_anomaly_detection_threshold = "10"
