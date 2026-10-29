@@ -1,4 +1,14 @@
 
+output "ConfInfo_SesMailIdentityDomain" {
+  value       = var.ses_mail_identity == null ? "" : aws_sesv2_email_identity.mail[0].email_identity
+  description = "SES mail domain identity; empty when disabled."
+}
+
+output "ConfInfo_SesMailDkimTokens" {
+  value       = var.ses_mail_identity == null ? "" : join(",", sort(aws_sesv2_email_identity.mail[0].dkim_signing_attributes[0].tokens))
+  description = "Comma-separated Easy DKIM tokens; empty when disabled. DNS records are managed separately in CORE."
+}
+
 output "ConfInfo_VpcId" {
   value = module.vpc_pn_confinfo.vpc_id
   description = "Id della VPC contenete i microservizi di PN che trattano informazioni Personali"

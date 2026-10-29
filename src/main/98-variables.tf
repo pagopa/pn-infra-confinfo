@@ -4,6 +4,24 @@ variable "aws_region" {
   default     = "eu-south-1"
 }
 
+variable "ses_mail_identity" {
+  description = "Optional SES mail domain identity. Null creates no identity; DNS verification records are managed separately in CORE."
+  type = object({
+    domain_name              = string
+    configuration_set_name   = string
+    email_forwarding_enabled = optional(bool, true)
+  })
+  default = null
+
+  validation {
+    condition = var.ses_mail_identity == null ? true : (
+      can(regex("^mail\\.[a-z0-9.-]+$", var.ses_mail_identity.domain_name)) &&
+      length(trimspace(var.ses_mail_identity.configuration_set_name)) > 0
+    )
+    error_message = "SES identity must be a mail.* domain and must specify an existing configuration set."
+  }
+}
+
 variable "environment" {
   type        = string
   default     = "dev"
