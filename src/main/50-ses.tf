@@ -1,5 +1,3 @@
-# DNS records are managed in CORE. Creating this identity does not wait for DKIM
-# verification, so the period before publishing its CNAME records can be tested.
 resource "aws_sesv2_email_identity" "mail" {
   count = var.ses_mail_identity == null ? 0 : 1
 
