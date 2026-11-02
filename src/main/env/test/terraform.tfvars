@@ -9,6 +9,7 @@ apigw_custom_domains = []
 pn_core_aws_account_id = "151559006927"
 pn_confinfo_aws_account_id = "771887334808"
 pn_confinfo_to_postel_vpcse = "com.amazonaws.vpce.eu-south-1.vpce-svc-0a03e3680c586118c"
+ses_mail_identity = {"domain_name":"mail.test.notifichedigitali.it","configuration_set_name":"sestocloudwatch","email_forwarding_enabled":true}
 pn_postel_private_link_additional_allowed_principal_account_ids = ["911845998067"]
 pn_cost_anomaly_detection_email = "pn-irt-team@pagopa.it"
 pn_cost_anomaly_detection_threshold = "10"
