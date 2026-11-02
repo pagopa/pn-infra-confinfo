@@ -13,5 +13,5 @@ resource "aws_sesv2_email_identity_feedback_attributes" "mail" {
   count = var.ses_mail_identity == null ? 0 : 1
 
   email_identity           = aws_sesv2_email_identity.mail[0].email_identity
-  email_forwarding_enabled = var.ses_mail_identity.email_forwarding_enabled
+  email_forwarding_enabled = true
 }

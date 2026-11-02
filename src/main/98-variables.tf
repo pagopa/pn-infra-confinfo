@@ -7,9 +7,8 @@ variable "aws_region" {
 variable "ses_mail_identity" {
   description = "Optional SES mail domain identity."
   type = object({
-    domain_name              = string
-    configuration_set_name   = string
-    email_forwarding_enabled = optional(bool, true)
+    domain_name            = string
+    configuration_set_name = string
   })
   default = null
 
