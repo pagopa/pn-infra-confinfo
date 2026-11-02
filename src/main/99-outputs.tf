@@ -6,7 +6,7 @@ output "ConfInfo_SesMailIdentityDomain" {
 
 output "ConfInfo_SesMailDkimTokens" {
   value       = var.ses_mail_identity == null ? "" : join(",", sort(aws_sesv2_email_identity.mail[0].dkim_signing_attributes[0].tokens))
-  description = "Comma-separated Easy DKIM tokens; empty when disabled. DNS records are managed separately in CORE."
+  description = "Comma-separated Easy DKIM tokens; empty when disabled."
 }
 
 output "ConfInfo_VpcId" {

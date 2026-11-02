@@ -5,7 +5,7 @@ variable "aws_region" {
 }
 
 variable "ses_mail_identity" {
-  description = "Optional SES mail domain identity. Null creates no identity; DNS verification records are managed separately in CORE."
+  description = "Optional SES mail domain identity."
   type = object({
     domain_name              = string
     configuration_set_name   = string
