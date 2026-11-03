@@ -40,7 +40,7 @@ resource "aws_lb" "pn_confinfo_ecs_alb" {
   security_groups    = [aws_security_group.vpc_pn_confinfo__secgrp_webapp.id]
   subnets            = local.ConfInfo_SubnetsIds
 
-  enable_deletion_protection = false
+  enable_deletion_protection = true
   drop_invalid_header_fields = true
 
   access_logs {
@@ -101,9 +101,10 @@ resource "aws_lb_listener" "pn_confinfo_ecs_alb_cons_norm_private_link" {
 resource "aws_lb" "pn_confinfo_dvin_nlb" {
   name_prefix = "DvI-"
 
-  internal = true
-  ip_address_type = "ipv4"
-  load_balancer_type = "network"
+  internal                   = true
+  ip_address_type            = "ipv4"
+  load_balancer_type         = "network"
+  enable_deletion_protection = true
 
   dynamic "subnet_mapping" {
     for_each = range(var.how_many_az)
@@ -177,9 +178,10 @@ resource "aws_lb_target_group_attachment" "pn_confinfo_dvin_nlb_http_to_alb_http
 resource "aws_lb" "pn_confinfo_ecssin_nlb" {
   name_prefix = "EcssI-"
 
-  internal = true
-  ip_address_type = "ipv4"
-  load_balancer_type = "network"
+  internal                   = true
+  ip_address_type            = "ipv4"
+  load_balancer_type         = "network"
+  enable_deletion_protection = true
 
   dynamic "subnet_mapping" {
     for_each = range(var.how_many_az)
@@ -254,9 +256,10 @@ resource "aws_lb_target_group_attachment" "pn_confinfo_ecssin_nlb_http_to_alb_ht
 resource "aws_lb" "pn_confinfo_postel_nlb" {
   name_prefix = "PtI-"
 
-  internal = true
-  ip_address_type = "ipv4"
-  load_balancer_type = "network"
+  internal                   = true
+  ip_address_type            = "ipv4"
+  load_balancer_type         = "network"
+  enable_deletion_protection = true
 
   dynamic "subnet_mapping" {
     for_each = range(var.how_many_az)
