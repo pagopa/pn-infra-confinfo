@@ -4,6 +4,20 @@ variable "aws_region" {
   default     = "eu-south-1"
 }
 
+variable "ses_mail_identity" {
+  description = "Optional SES mail domain identity."
+  type = object({
+    domain_name            = string
+    configuration_set_name = string
+  })
+  default = null
+
+  validation {
+    condition     = var.ses_mail_identity == null ? true : length(trimspace(var.ses_mail_identity.configuration_set_name)) > 0
+    error_message = "The SES configuration set name must not be empty."
+  }
+}
+
 variable "environment" {
   type        = string
   default     = "dev"
