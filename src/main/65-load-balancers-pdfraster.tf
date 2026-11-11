@@ -32,7 +32,7 @@ resource "aws_lb" "pn_pdfraster_ecs_alb" {
   security_groups    = [aws_security_group.vpc_pn_pdfraster__secgrp_webapp.id]
   subnets            = local.PdfRaster_SubnetsIds
 
-  enable_deletion_protection = false
+  enable_deletion_protection = true
   drop_invalid_header_fields = true
 
   access_logs {
@@ -75,9 +75,10 @@ resource "aws_lb_listener" "pn_pdfraster_ecs_alb_8080" {
 resource "aws_lb" "pn_pdfraster_in_nlb" {
   name_prefix = "PdfI-"
 
-  internal = true
-  ip_address_type = "ipv4"
-  load_balancer_type = "network"
+  internal                   = true
+  ip_address_type            = "ipv4"
+  load_balancer_type         = "network"
+  enable_deletion_protection = true
 
   dynamic "subnet_mapping" {
     for_each = range(var.how_many_az)
